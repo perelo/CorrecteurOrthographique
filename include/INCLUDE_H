@@ -1,0 +1,11 @@
+#/**
+#*
+#* @File : INCLUDE_H // fichier des macros pour le makefile
+#*
+#*
+#**/
+INCLUDE = ../include
+#
+#
+PROJET_H = $(INCLUDE)/Levenshtein.h
+#
