@@ -7,5 +7,5 @@
 INCLUDE = ../include
 #
 #
-PROJET_H = $(INCLUDE)/Levenshtein.h
+PROJET_H = $(INCLUDE)/Levenshtein.h $(INCLUDE)/CHashMap.h $(INCLUDE)/CLink.h
 #

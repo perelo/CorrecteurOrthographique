@@ -5,7 +5,7 @@
 
 using namespace std;
 
-unsigned nsUtil::levenshteinD(const string & MotOrig, const string & MotDest)
+unsigned nsUtil::Levenshtein(const string & MotOrig, const string & MotDest)
 {
     const string::size_type LgOrig = MotOrig.size();
     const string::size_type LgDest = MotDest.size();
@@ -32,4 +32,4 @@ unsigned nsUtil::levenshteinD(const string & MotOrig, const string & MotDest)
 
     return D[LgOrig][LgDest];
 
-} // levenshteinD()
+} // Levenshtein()

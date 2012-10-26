@@ -3,7 +3,7 @@
 namespace nsUtil
 {
 
-    unsigned levenshteinD(const std::string & MotOrig,
-                          const std::string & MotDest);
+    unsigned Levenshtein(const std::string & MotOrig,
+                         const std::string & MotDest);
 
 } // namespace nsUtil

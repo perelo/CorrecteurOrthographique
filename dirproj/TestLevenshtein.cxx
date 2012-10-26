@@ -18,7 +18,7 @@ namespace
     {
         clock_t Deb;
         double  Temps;
-        string MotOrig, MotDest;
+        string MotOrig, MotDest, NomDico = "../materiel4/dico2012.txt";
         VString Dico;
 
         MotOrig = "acceuil";
@@ -47,11 +47,18 @@ namespace
              << Levenshtein(MotOrig, MotDest) << endl;
 
         ifstream is ("../materiel4/dico2012.txt");
+        if (is.fail())
+        {
+            cout << "Ouverture du dico \"" << NomDico
+                 << "\" impossible" << endl;
+            is.close();
+            return;
+        }
+
         for (; ! (getline(is, MotDest)).eof(); )
             Dico.push_back(MotDest);
         is.close();
 
-        MotOrig = "baillonette";
         Deb = clock();
         for (Iter_t i (Dico.begin()); i < Dico.end(); ++i)
             Levenshtein(MotOrig, *i);
