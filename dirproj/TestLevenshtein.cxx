@@ -1,3 +1,7 @@
+/*
+ * @File TestLevenshtein.cxx
+ *
+ */
 #include <iostream>
 #include <string>
 #include <vector>
@@ -18,7 +22,7 @@ namespace
     {
         clock_t Deb;
         double  Temps;
-        string MotOrig, MotDest, NomDico = "../materiel4/dico2012.txt";
+        string MotOrig, MotDest, NomDico = "../materiel4/dico_iso.txt";
         VString Dico;
 
         MotOrig = "acceuil";
@@ -46,7 +50,7 @@ namespace
         cout << "Levenshtein(" << MotOrig << ", " << MotDest << ") = "
              << Levenshtein(MotOrig, MotDest) << endl;
 
-        ifstream is ("../materiel4/dico2012.txt");
+        ifstream is (NomDico.c_str());
         if (is.fail())
         {
             cout << "Ouverture du dico \"" << NomDico

@@ -2,49 +2,45 @@
  * @File : CLink.hxx
  *
  */
-#include <string>
-
 #ifndef __CLINK_HXX__
 #define __CLINK_HXX__
 
 #include "CLink.h"
 
-#define LINK nsSdD::CLink
+#define TEMPL    template <class T>
+#define TEMPLINL TEMPL inline
 
-inline
-LINK::CLink (const std::string & Str     /* = std::string() */,
-             const PtrL_t        Suivant /* = 0 */)        throw()
- : m_Str (Str), m_Suivant (Suivant) {}
+#define LINK nsSdD::CLink<T>
 
-inline LINK::~CLink (void) throw()
+TEMPLINL
+LINK::CLink (const T &    Info    /* = T() */,
+             const PtrL_t Suivant /* = 0 */) throw ()
+ : m_Info (Info), m_Suivant (Suivant) {}
+
+TEMPLINL LINK::~CLink (void) throw ()
 {
     // detruire la liste recursivement
     delete GetSuivant();
 
 } // ~CLink
 
-inline
-std::string LINK::GetStr (void) const throw() { return m_Str; }
+TEMPLINL
+T & LINK::GetInfo (void) const throw () { return m_Info; }
 
-inline
-LINK * LINK::GetSuivant (void) const throw() { return m_Suivant; }
+TEMPLINL
+T & LINK::GetInfo (void)       throw () { return m_Info; }
 
-inline
-void LINK::SetStr (const std::string & Str) throw()
-{
-    m_Str = Str;
+TEMPLINL
+LINK * LINK::GetSuivant (void) const throw () { return m_Suivant; }
 
-} // SetStr()
+TEMPLINL
+void LINK::SetInfo    (const T & Info)      throw () { m_Info = Info; }
 
-inline
-void LINK::SetSuivant (const PtrL_t Suivant) throw()
-{
-    m_Suivant = Suivant;
+TEMPLINL
+void LINK::SetSuivant (const PtrL_t Suivant) throw () { m_Suivant = Suivant; }
 
-} // SetSuivant()
-
-inline
-LINK * LINK::InsereApres (PtrL_t NewElem) throw()
+TEMPLINL
+LINK * LINK::InsereApres (PtrL_t NewElem) throw ()
 {
     NewElem->SetSuivant(this->GetSuivant());
     this->SetSuivant(NewElem);
@@ -53,8 +49,8 @@ LINK * LINK::InsereApres (PtrL_t NewElem) throw()
 
 } // InsereApres()
 
-inline
-LINK * LINK::SupprimeSuivant (PtrL_t Elem) throw()
+TEMPLINL
+LINK * LINK::SupprimeSuivant (PtrL_t Elem) throw ()
 {
     PtrL_t Suivant = Elem->GetSuivant();
     Elem->SetSuivant(Suivant->GetSuivant());
@@ -62,5 +58,9 @@ LINK * LINK::SupprimeSuivant (PtrL_t Elem) throw()
     return Suivant;
 
 } // Supprime()
+
+#undef LINK
+#undef TEMPLINL
+#undef TEMPL
 
 #endif /* __CLINK_HXX__ */

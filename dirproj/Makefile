@@ -8,28 +8,48 @@
 #**/
 include ../include/INCLUDE_H
 #
-COMPILER = g++ -c -I$(INCLUDE) -Wall -O3 -Werror $*.cxx
+CC = g++
+CFLAGS = -I$(INCLUDE) -Wall -Werror -O3
+COMPILER = $(CC) -c $(CFLAGS) $*.cxx
 #
-PROJET_O = Levenshtein.o CHashMap.o CLink.o
+PROJET_O = Levenshtein.o CHashMap.o IHash.o CHashStr.o CLink.o MathUtil.o \
+           Correcteur.o
 
+#
 # Edition de liens
 #
 $(nom) : $(nom).o $(PROJET_O)
 	g++ -o $(nom).run $(nom).o $(PROJET_O)
 #
-all : $(PROJET_O)
+dep : $(PROJET_O)
 #
 #
-$(nom).o : $(nom).cxx $(PROJET_H)
-	$(COMPILER) 
+
 #
-Levenshtein.o : Levenshtein.cxx $(PROJET_H)
+# Compilation
+#
+$(nom).o : $(nom).cxx $(SDD_H) $(UTIL_H) $(CORR_H)
 	$(COMPILER)
 #
-CLink.o : CLink.cxx $(PROJET_H)
+Levenshtein.o : Levenshtein.cxx $(UTIL_H)
 	$(COMPILER)
 #
-CHashMap.o : CHashMap.cxx $(PROJET_H)
+CHashMap.o : CHashMap.cxx $(UTIL_H) $(SDD_H)
+	$(COMPILER)
+#
+IHash.o : IHash.cxx $(UTIL_H) $(SDD_H)
+	$(COMPILER)
+#
+CHashStr.o : CHashStr.cxx $(UTIL_H) $(SDD_H)
+	$(COMPILER)
+#
+CLink.o : CLink.cxx $(UTIL_H) $(SDD_H)
+	$(COMPILER)
+#
+MathUtil.o : MathUtil.cxx $(UTIL_H)
+	$(COMPILER)
+#
+Correcteur.o : Correcteur.cxx $(SDD_H) $(UTIL_H) $(CORR_H)
 	$(COMPILER)
 #
 
