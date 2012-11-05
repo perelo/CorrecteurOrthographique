@@ -1,5 +1,7 @@
 /*
- * @File : CHashMap.hxx
+ * @File CHashMap.hxx
+ *
+ * @Date 26-10-2012
  *
  */
 #ifndef __CHASHMAP_HXX__
@@ -36,10 +38,14 @@ MAP::CHashMap (Hashor_t * Hashor, const unsigned Cap) throw ()
 //}
 
 TEMPLINL
-MAP::~CHashMap () throw () {}
+MAP::~CHashMap () throw ()
+{
+    for (unsigned i(0); i < GetCapacity(); ++i)
+        delete m_V[i];
+}
 
 TEMPLINL
-const unsigned & MAP::GetNbElem (void) const throw ()
+unsigned MAP::GetNbElem (void) const throw ()
 {
     return m_NbElem;
 
@@ -51,6 +57,13 @@ unsigned MAP::GetCapacity (void) const throw ()
     return m_V.size();
 
 } // GetCapacity()
+
+TEMPLINL
+const typename MAP::VKeys_t & MAP::GetKeys (void) const throw ()
+{
+    return m_Keys;
+
+} // GetKeys()
 
 //TEMPL
 //void MAP::EnsureCapacity (void) throw ()
@@ -92,64 +105,65 @@ void MAP::FillNbEntree (std::vector<unsigned> & VNbEntree) const throw ()
 } // FillNbEntree()
 
 TEMPL
-void MAP::Put (const K & Key, const V & Value) throw ()
+typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
 {
-//    EnsureCapacity();
-
+    //cout << "[] on " << Key << endl;
     unsigned H ((*m_Hashor)(Key, GetCapacity()));
-    LinkPair_t * Prec = 0;
 
-    for (LinkPair_t * Elem (m_V[H]); Elem; Prec = Elem,
-                                           Elem = Elem->GetSuivant())
-        if (Value == Elem->GetInfo().second) return;
+    for (LinkPair_t * Elem (m_V[H]); Elem != 0; Elem = Elem->GetSuivant())
+        if (Elem->GetInfo().first == Key)
+            return Elem->GetInfo().second;
 
-    if (Prec)
-        Prec->SetSuivant(new LinkPair_t(make_pair(Key, Value)));
-    else
-        m_V[H] = new LinkPair_t(make_pair(Key, Value));
-
+    // pas d'elements a l'indice Key, on le cree, initialise par defaut
+    m_V[H] = new LinkPair_t(make_pair(Key, Value_t()), m_V[H]);
+    m_Keys.push_back(Key);
     ++m_NbElem;
 
-} // Put()
+    return m_V[H]->GetInfo().second;
+
+} // operator[]()
 
 TEMPL
-const V & MAP::Get (const K & Key) const throw ()
+const typename MAP::Entry_t * MAP::Find (const Key_t & Key) const throw ()
 {
-    LinkPair_t * Elem = m_V[m_Hashor(Key, GetCapacity())];
-    for (; Elem && Key != Elem->GetInfo().first; Elem = Elem->GetSuivant());
+    unsigned H ((*m_Hashor)(Key, GetCapacity()));
 
-    return (Elem ? Elem->GetInfo().second : V());
-
-} // Get()
-
-TEMPL
-typename MAP::Iter_t MAP::begin () const throw ()
-{
-    for (typename VLinkPair_t::const_iterator i (m_V.begin());
-                                                        i < m_V.end(); ++i)
-        if (*i) return *i;
+    for (LinkPair_t * Elem (m_V[H]); Elem != 0; Elem = Elem->GetSuivant())
+        if (Elem->GetInfo().first == Key)
+            return &Elem->GetInfo();
 
     return 0;
 
-} // begin()
+} // Find()
 
-TEMPL
-typename MAP::Iter_t MAP::end () const throw ()
-{
-    for (typename VLinkPair_t::const_reverse_iterator i (m_V.rbegin());
-                                                        i < m_V.rend(); ++i)
-    {
-        if (*i)
-        {
-            LinkPair_t * p;
-            for (p = *i; p != 0; ++i);
-            return p;
-        }
-    }
-
-    return 0;
-
-} // end()
+//TEMPL
+//typename MAP::Iter_t MAP::begin () const throw ()
+//{
+//    for (typename VLinkPair_t::const_iterator i (m_V.begin());
+//                                                        i < m_V.end(); ++i)
+//        if (*i) return *i;
+//
+//    return 0;
+//
+//} // begin()
+//
+//TEMPL
+//typename MAP::Iter_t MAP::end () const throw ()
+//{
+//    for (typename VLinkPair_t::const_reverse_iterator i (m_V.rbegin());
+//                                                        i < m_V.rend(); ++i)
+//    {
+//        if (*i)
+//        {
+//            LinkPair_t * p;
+//            for (p = *i; p != 0; ++i);
+//            return p;
+//        }
+//    }
+//
+//    return 0;
+//
+//} // end()
 
 #undef MAP
 #undef TEMPLINL

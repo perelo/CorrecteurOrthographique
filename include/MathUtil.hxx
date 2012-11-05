@@ -1,6 +1,8 @@
 /*
  * @File MathUtil.hxx
  *
+ * @Date 26-10-2012
+ *
  */
 #ifndef __MATHUTIL_HXX__
 #define __MATHUTIL_HXX__

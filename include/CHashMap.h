@@ -1,5 +1,7 @@
 /*
- * @File : CHashMap.h
+ * @File CHashMap.h
+ *
+ * @Date 26-10-2012
  *
  */
 #ifndef __CHASHMAP_H__
@@ -17,10 +19,14 @@ namespace nsSdD
     class CHashMap
     {
       public :
-        typedef CLink<std::pair<K, V> >   LinkPair_t;
+        typedef K                         Key_t;
+        typedef V                         Value_t;
+        typedef std::pair<K, V>           Entry_t;
+        typedef CLink<Entry_t>            LinkPair_t;
         typedef std::vector<LinkPair_t *> VLinkPair_t;
-        typedef CLink<std::pair<K, V> > * Iter_t;
+        typedef std::vector<Key_t>        VKeys_t;
         typedef nsUtil::IHash<K>          Hashor_t;
+//        typedef CLink<std::pair<K, V> > * Iter_t;
 
       private :
         static const float s_LoadFactor;
@@ -28,23 +34,28 @@ namespace nsSdD
         unsigned m_NbElem;
         VLinkPair_t m_V;
         Hashor_t * m_Hashor; // ptr car polymorphisme dans le constructeur
+        VKeys_t m_Keys;
 
 //        void EnsureCapacity (void)                                  throw ();
 
       public :
         CHashMap (Hashor_t * Hashor, const unsigned Cap)            throw ();
 //        CHashMap (Hashor_t * Hashor)                                throw ();
-        virtual ~CHashMap (void)                                    throw ();
+        ~CHashMap (void)                                            throw ();
 
-        const unsigned & GetNbElem   (void)                   const throw ();
-        unsigned         GetCapacity (void)                   const throw ();
+        unsigned        GetNbElem   (void)                    const throw ();
+        unsigned        GetCapacity (void)                    const throw ();
+        const VKeys_t & GetKeys     (void)                    const throw ();
         void FillNbEntree (std::vector<unsigned> & VNbEntree) const throw ();
 
-        const V & Get (const K & Key)                         const throw ();
-        void Put (const K & Key, const V & Value)                   throw ();
+        Value_t & operator [] (const Key_t & Key)                   throw ();
+        const Entry_t * Find  (const Key_t & Key)             const throw ();
 
-        Iter_t begin ()                                       const throw ();
-        Iter_t end   ()                                       const throw ();
+        // TODO remove, FOR DEBUG PURPOSE ONLY
+        VLinkPair_t & GetV (void) throw () { return m_V; }
+
+//        Iter_t begin ()                                       const throw ();
+//        Iter_t end   ()                                       const throw ();
 
     }; // CHashMap
 

@@ -1,5 +1,7 @@
 /*
- * IHash.hxx
+ * @File IHash.hxx
+ *
+ * @Date 30-10-2012
  *
  */
 #ifndef __IHASH_HXX__

@@ -1,5 +1,7 @@
 /*
- * @File : CLink.h
+ * @File CLink.h
+ *
+ * @Date 26-10-2012
  *
  */
 #ifndef __CLINK_H__

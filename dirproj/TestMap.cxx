@@ -1,7 +1,10 @@
 /*
  * @File TestMap.cxx
  *
+ * @Date 26-10-2012
+ *
  */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -32,7 +35,7 @@ namespace
         }
 
         for (string Str; getline(is, Str); )
-            Dico.Put(Str, Str);
+            Dico[Str] = Str;
 
         is.close();
 

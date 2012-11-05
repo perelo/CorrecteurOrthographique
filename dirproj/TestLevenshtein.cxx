@@ -1,7 +1,10 @@
 /*
  * @File TestLevenshtein.cxx
  *
+ * @Date 25-10-2012
+ *
  */
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -18,7 +21,7 @@ namespace
     typedef vector<string> VString;
     typedef VString::iterator Iter_t;
 
-    void TestLevenshtein()
+    void TestLevenshteinD()
     {
         clock_t Deb;
         double  Temps;
@@ -27,28 +30,28 @@ namespace
 
         MotOrig = "acceuil";
         MotDest = "accueil";
-        cout << "Levenshtein(" << MotOrig << ", " << MotDest << ") = "
-             << Levenshtein(MotOrig, MotDest) << endl;
+        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
+             << LevenshteinD(MotOrig, MotDest) << endl;
 
         MotOrig = "arborigène";
         MotDest = "aborigène";
-        cout << "Levenshtein(" << MotOrig << ", " << MotDest << ") = "
-             << Levenshtein(MotOrig, MotDest) << endl;
+        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
+             << LevenshteinD(MotOrig, MotDest) << endl;
 
         MotOrig = "baillonette";
         MotDest = "baïonnette";
-        cout << "Levenshtein(" << MotOrig << ", " << MotDest << ") = "
-             << Levenshtein(MotOrig, MotDest) << endl;
+        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
+             << LevenshteinD(MotOrig, MotDest) << endl;
 
         MotOrig = "banquaire";
         MotDest = "bancaire";
-        cout << "Levenshtein(" << MotOrig << ", " << MotDest << ") = "
-             << Levenshtein(MotOrig, MotDest) << endl;
+        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
+             << LevenshteinD(MotOrig, MotDest) << endl;
 
         MotOrig = "déconnection";
         MotDest = "déconnexion";
-        cout << "Levenshtein(" << MotOrig << ", " << MotDest << ") = "
-             << Levenshtein(MotOrig, MotDest) << endl;
+        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
+             << LevenshteinD(MotOrig, MotDest) << endl;
 
         ifstream is (NomDico.c_str());
         if (is.fail())
@@ -65,19 +68,19 @@ namespace
 
         Deb = clock();
         for (Iter_t i (Dico.begin()); i < Dico.end(); ++i)
-            Levenshtein(MotOrig, *i);
+            LevenshteinD(MotOrig, *i);
         Temps = (clock() - Deb) / (double) CLOCKS_PER_SEC;
 
-        cout << "Temps de Levenshtein(" << MotOrig << ", mot du dico) = "
+        cout << "Temps de LevenshteinD(" << MotOrig << ", mot du dico) = "
              << Temps * 1000 << " ms" << endl;
 
-    } // TestLevenshtein()
+    } // TestLevenshteinD()
 
 } // namespace anonyme
 
 int main (void)
 {
-    TestLevenshtein();
+    TestLevenshteinD();
 
     return 0;
 

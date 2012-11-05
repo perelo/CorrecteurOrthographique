@@ -1,7 +1,10 @@
 /*
  * @File CHashStr.cxx
  *
+ * @Date 30-10-2012
+ *
  */
+
 #include <string>
 
 #include "CHashStr.h"

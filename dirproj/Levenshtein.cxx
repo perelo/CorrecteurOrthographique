@@ -1,7 +1,10 @@
 /*
  * @File Levenshtein.cxx
  *
+ * @Date 25-10-2012
+ *
  */
+
 #include <string>
 #include <algorithm>    // min
 
@@ -9,7 +12,8 @@
 
 using namespace std;
 
-unsigned nsUtil::Levenshtein(const string & MotOrig, const string & MotDest)
+unsigned nsUtil::LevenshteinD (const string & MotOrig, const string & MotDest)
+                                                                    throw ()
 {
     const string::size_type LgOrig = MotOrig.size();
     const string::size_type LgDest = MotDest.size();
@@ -36,4 +40,12 @@ unsigned nsUtil::Levenshtein(const string & MotOrig, const string & MotDest)
 
     return D[LgOrig][LgDest];
 
-} // Levenshtein()
+} // LevenshteinD()
+
+float nsUtil::LevenshteinC (const string & MotOrig, const string & MotDest)
+                                                                    throw ()
+{
+    return 1 - LevenshteinD(MotOrig, MotDest) /
+                                float(max(MotOrig.size(), MotDest.size()));
+
+} // LevenshteinC()

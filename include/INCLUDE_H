@@ -8,9 +8,11 @@ INCLUDE = ../include
 #
 #
 SDD_H  = $(INCLUDE)/CHashMap.h    $(INCLUDE)/CHashMap.hxx  \
-         $(INCLUDE)/IHash.h       $(INCLUDE)/IHash.hxx     \
          $(INCLUDE)/CHashStr.h    $(INCLUDE)/CHashStr.hxx  \
          $(INCLUDE)/CLink.h       $(INCLUDE)/CLink.hxx
 UTIL_H = $(INCLUDE)/MathUtil.h    $(INCLUDE)/MathUtil.hxx  \
-         $(INCLUDE)/Levenshtein.h
+         $(INCLUDE)/IHash.h       $(INCLUDE)/IHash.hxx     \
+         $(INCLUDE)/IComp.h       $(INCLUDE)/IComp.hxx     \
+         $(INCLUDE)/Levenshtein.h                          \
+         $(INCLUDE)/Jaccard.h
 CORR_H = $(INCLUDE)/Correcteur.h  $(INCLUDE)/Correcteur.hxx

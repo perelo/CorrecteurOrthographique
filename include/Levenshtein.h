@@ -1,6 +1,8 @@
 /*
  * @File Levenshtein.h
  *
+ * @Date 25-10-2012
+ *
  */
 #ifndef __LEVENSHTEIN_H__
 #define __LEVENSHTEIN_H__
@@ -10,8 +12,11 @@
 namespace nsUtil
 {
 
-    unsigned Levenshtein(const std::string & MotOrig,
-                         const std::string & MotDest);
+    unsigned LevenshteinD(const std::string & MotOrig,
+                          const std::string & MotDest) throw ();
+
+    float    LevenshteinC (const std::string & MotOrig,
+                           const std::string & MotDest) throw ();
 
 } // namespace nsUtil
 

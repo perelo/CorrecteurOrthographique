@@ -1,5 +1,7 @@
 /*
- * CHashStr.hxx
+ * @File CHashStr.hxx
+ *
+ * @Date 30-10-2012
  *
  */
 #ifndef __CHASHSTR_HXX__

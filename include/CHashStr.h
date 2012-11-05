@@ -1,5 +1,7 @@
 /*
- * CHashStr.h
+ * @File CHashStr.h
+ *
+ * @Date 30-10-2012
  *
  */
 #ifndef __CHASHSTR_H__
@@ -14,9 +16,9 @@ namespace nsUtil
     class CHashStr : public IHash <std::string>
     {
       public :
+        virtual ~CHashStr ()                                         throw ();
         virtual unsigned operator () (const std::string & Str,
                                       const unsigned Cap)      const throw ();
-        virtual ~CHashStr ()                                         throw ();
 
     }; // CHashStr
 

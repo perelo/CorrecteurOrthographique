@@ -1,5 +1,7 @@
 /*
- * IHash.h
+ * @File IHash.h
+ *
+ * @Date 30-10-2012
  *
  */
 #ifndef __IHASH_H__
@@ -11,9 +13,9 @@ namespace nsUtil
     class IHash
     {
       public :
+        virtual ~IHash (void)                                     throw ();
         virtual unsigned operator () (const T & ToHash, const unsigned Cap)
                                                             const throw () = 0;
-        virtual ~IHash () throw ();
 
     }; // IHash
 

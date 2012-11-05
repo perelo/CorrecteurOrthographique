@@ -12,7 +12,8 @@ CC = g++
 CFLAGS = -I$(INCLUDE) -Wall -Werror -O3
 COMPILER = $(CC) -c $(CFLAGS) $*.cxx
 #
-PROJET_O = Levenshtein.o CHashMap.o IHash.o CHashStr.o CLink.o MathUtil.o \
+PROJET_O = Levenshtein.o Jaccard.o MathUtil.o IHash.o IComp.o \
+           CHashMap.o CHashStr.o CLink.o                      \
            Correcteur.o
 
 #
@@ -34,19 +35,25 @@ $(nom).o : $(nom).cxx $(SDD_H) $(UTIL_H) $(CORR_H)
 Levenshtein.o : Levenshtein.cxx $(UTIL_H)
 	$(COMPILER)
 #
-CHashMap.o : CHashMap.cxx $(UTIL_H) $(SDD_H)
+Jaccard.o : Jaccard.cxx $(UTIL_H)
 	$(COMPILER)
 #
-IHash.o : IHash.cxx $(UTIL_H) $(SDD_H)
+MathUtil.o : MathUtil.cxx $(UTIL_H)
+	$(COMPILER)
+#
+IHash.o : IHash.cxx $(UTIL_H)
+	$(COMPILER)
+#
+IComp.o : IComp.cxx $(UTIL_H)
+	$(COMPILER)
+#
+CHashMap.o : CHashMap.cxx $(UTIL_H) $(SDD_H)
 	$(COMPILER)
 #
 CHashStr.o : CHashStr.cxx $(UTIL_H) $(SDD_H)
 	$(COMPILER)
 #
 CLink.o : CLink.cxx $(UTIL_H) $(SDD_H)
-	$(COMPILER)
-#
-MathUtil.o : MathUtil.cxx $(UTIL_H)
 	$(COMPILER)
 #
 Correcteur.o : Correcteur.cxx $(SDD_H) $(UTIL_H) $(CORR_H)
