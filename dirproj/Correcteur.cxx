@@ -91,11 +91,13 @@ int nsCorr::CorrigerMot (const string & Mot,
                                          ItKey < Cpt.GetKeys().end(); ++ItKey)
     {
         StrCpt_t::Entry_t E (*Cpt.Find(*ItKey));
-        if (E.second == MaxOcc && Jaccard(E.first.c_str(), Mot.c_str()) > 0.2)
+        if (E.second == MaxOcc /*&& Jaccard(E.first.c_str(), Mot.c_str()) > 0.2*/)
             VProp.push_back(E.first);
     }
 
     sort(VProp.begin(), VProp.end(), CompJaccard(Mot));
+    // TODO faire quelque chose
+
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
     if (VProp.size() > 10)
         VProp.erase(VProp.begin(), VProp.end() - 10);
@@ -114,7 +116,8 @@ inline
 bool nsCorr::CompJaccard::operator () (const string & A, const string & B)
                                                              const throw ()
 {
-    return Jaccard(A.c_str(), Mot.c_str()) < Jaccard(B.c_str(), Mot.c_str());
+    return false;
+    //return Jaccard(A.c_str(), Mot.c_str()) < Jaccard(B.c_str(), Mot.c_str());
 
 } // operator()()
 

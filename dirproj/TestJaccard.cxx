@@ -6,7 +6,6 @@
  */
 
 #include <iostream>
-#include <string>
 
 #include "Jaccard.h"
 
@@ -31,20 +30,16 @@ namespace
 
 int main ()
 {
-    string A ("accueil");
-    string B ("acceuil");
+    int A (13), B (7);
 
     cout << A << "\n\t";
-    for (unsigned i(0); i < A.size(); ++i)
-        AffichBin(A[i]);
-
+    AffichBin(A);
     cout << '\n' << B << "\n\t";
-    for (unsigned i(0); i < B.size(); ++i)
-        AffichBin(B[i]);
+    AffichBin(B);
     cout << endl;
 
-    cout << "J(\"" << A << "\", \"" << B << "\") = "
-         << Jaccard(A.c_str(), B.c_str()) << endl;
+    cout << "J(" << A << ", " << B << ") = "
+         << Jaccard(A, B) << endl;
 
     return 0;
 

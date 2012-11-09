@@ -5,25 +5,19 @@
  *
  */
 
-#include <algorithm>    // min
-
-#include <cstring>      // strlen
-
 #include "Jaccard.h"
 
-#include <iostream>
-using namespace std;
-float nsUtil::Jaccard (const char * A, const char * B) throw ()
+float nsUtil::Jaccard (const int A, const int B) throw ()
 {
     unsigned M00 (0), M11 (0), n(0), diff;
     bool isA, isB;
-    for (unsigned i(0); i < std::min(strlen(A), strlen(B)); ++i)
+    for (unsigned i(0); i < sizeof(int); ++i)
     {
         ++n;
         for (unsigned j(0); j < 8; ++j)
         {
-            isA = (1 & (A[i] >> j));
-            isB = (1 & (B[i] >> j));
+            isA = (1 & (A >> j));
+            isB = (1 & (B >> j));
             M11 +=  isA &   isB;
             M00 += !isA && !isB;
         }

@@ -51,9 +51,6 @@ namespace nsSdD
         Value_t & operator [] (const Key_t & Key)                   throw ();
         const Entry_t * Find  (const Key_t & Key)             const throw ();
 
-        // TODO remove, FOR DEBUG PURPOSE ONLY
-        VLinkPair_t & GetV (void) throw () { return m_V; }
-
 //        Iter_t begin ()                                       const throw ();
 //        Iter_t end   ()                                       const throw ();
 

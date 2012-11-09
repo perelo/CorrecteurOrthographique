@@ -32,6 +32,13 @@ int main (int argc, char * argv [])
     cout << "Fin construction : " << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
+/*
+    string Mot;
+    ifstream is ("test_iso.txt");
+    getline (is, Mot);
+    is.close();
+*/
+
     string Mot ("acceuil");
     cout << "\nMot a corriger : " << Mot << endl;
     vector<string> VProp;

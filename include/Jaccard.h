@@ -9,7 +9,7 @@
 
 namespace nsUtil
 {
-    float Jaccard (const char * A, const char * B) throw ();
+    float Jaccard (const int A, const int B) throw ();
 
 } // namespace nsUtil
 

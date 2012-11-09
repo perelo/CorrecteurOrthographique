@@ -25,54 +25,56 @@ namespace
     {
         clock_t Deb;
         double  Temps;
-        string MotOrig, MotDest, NomDico = "../materiel4/dico_iso.txt";
+        string MotDico;
+        string NomDico = "../materiel4/dico_iso.txt";
+        string NomTest = "TestFiles/leven_iso.txt";
         VString Dico;
 
-        MotOrig = "acceuil";
-        MotDest = "accueil";
-        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
-             << LevenshteinD(MotOrig, MotDest) << endl;
-
-        MotOrig = "arborigène";
-        MotDest = "aborigène";
-        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
-             << LevenshteinD(MotOrig, MotDest) << endl;
-
-        MotOrig = "baillonette";
-        MotDest = "baïonnette";
-        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
-             << LevenshteinD(MotOrig, MotDest) << endl;
-
-        MotOrig = "banquaire";
-        MotDest = "bancaire";
-        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
-             << LevenshteinD(MotOrig, MotDest) << endl;
-
-        MotOrig = "déconnection";
-        MotDest = "déconnexion";
-        cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
-             << LevenshteinD(MotOrig, MotDest) << endl;
-
-        ifstream is (NomDico.c_str());
-        if (is.fail())
+        /*
+         * Creation du dictionnaire
+         */
+        ifstream DicoIs (NomDico.c_str());
+        if (DicoIs.fail())
         {
             cout << "Ouverture du dico \"" << NomDico
-                 << "\" impossible" << endl;
-            is.close();
+                << "\" impossible" << endl;
+            DicoIs.close();
             return;
         }
+        for (; ! (getline(DicoIs, MotDico)).eof(); )
+            Dico.push_back(MotDico);
+        DicoIs.close();
 
-        for (; ! (getline(is, MotDest)).eof(); )
-            Dico.push_back(MotDest);
-        is.close();
+        /*
+         * Test
+         */
+        ifstream TestIs (NomTest.c_str());
+        if (TestIs.fail())
+        {
+            cout << "Ouverture du fichier test impossible" << endl;
+            TestIs.close();
+            return;
+        }
+        for (string MotOrig, MotDest; ! (getline(TestIs, MotOrig)).eof(); )
+        {
+            if (getline(TestIs, MotDest).eof())
+            {
+                // leven avec tout le dico
+                Deb = clock();
+                for (Iter_t i (Dico.begin()); i < Dico.end(); ++i)
+                    LevenshteinD(MotOrig, *i);
+                Temps = (clock() - Deb) / (double) CLOCKS_PER_SEC;
 
-        Deb = clock();
-        for (Iter_t i (Dico.begin()); i < Dico.end(); ++i)
-            LevenshteinD(MotOrig, *i);
-        Temps = (clock() - Deb) / (double) CLOCKS_PER_SEC;
+                cout << "Temps de LevenshteinD(" << MotOrig << ", mot du dico) = "
+                    << Temps * 1000 << " ms" << endl;
 
-        cout << "Temps de LevenshteinD(" << MotOrig << ", mot du dico) = "
-             << Temps * 1000 << " ms" << endl;
+                break;
+            }
+            cout << "LevenshteinD(" << MotOrig << ", " << MotDest << ") = "
+                 << LevenshteinD(MotOrig, MotDest) << endl;
+
+        }
+        TestIs.close();
 
     } // TestLevenshteinD()
 

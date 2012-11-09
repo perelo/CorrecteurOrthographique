@@ -13,9 +13,6 @@ using namespace std;
 
 #define HSTR nsUtil::CHashStr
 
-#include <iostream>
-using std::cout;
-using std::endl;
 unsigned HSTR::operator () (const string & Str, const unsigned Cap)
                                                                 const throw ()
 {
