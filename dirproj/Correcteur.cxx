@@ -87,12 +87,11 @@ int nsCorr::CorrigerMot (const string & Mot,
 
     VProp.empty();
 
-    for (StrCpt_t::VKeys_t::const_iterator ItKey (Cpt.GetKeys().begin());
-                                         ItKey < Cpt.GetKeys().end(); ++ItKey)
+    for (StrCpt_t::iterator It (Cpt.begin()); It < Cpt.end(); ++It)
     {
-        StrCpt_t::Entry_t E (*Cpt.Find(*ItKey));
-        if (E.second == MaxOcc /*&& Jaccard(E.first.c_str(), Mot.c_str()) > 0.2*/)
-            VProp.push_back(E.first);
+        if (It->second == MaxOcc /*&&
+            Jaccard(E.first.c_str(), Mot.c_str()) > 0.2*/)
+            VProp.push_back(It->first);
     }
 
     sort(VProp.begin(), VProp.end(), CompJaccard(Mot));

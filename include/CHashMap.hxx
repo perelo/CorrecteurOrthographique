@@ -58,13 +58,6 @@ unsigned MAP::GetCapacity (void) const throw ()
 
 } // GetCapacity()
 
-TEMPLINL
-const typename MAP::VKeys_t & MAP::GetKeys (void) const throw ()
-{
-    return m_Keys;
-
-} // GetKeys()
-
 //TEMPL
 //void MAP::EnsureCapacity (void) throw ()
 //{

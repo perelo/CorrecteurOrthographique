@@ -44,7 +44,6 @@ namespace nsSdD
 
         unsigned        GetNbElem   (void)                    const throw ();
         unsigned        GetCapacity (void)                    const throw ();
-        const VKeys_t & GetKeys     (void)                    const throw ();
         void FillNbEntree (std::vector<unsigned> & VNbEntree) const throw ();
 
         Value_t & operator [] (const Key_t & Key)                   throw ();
