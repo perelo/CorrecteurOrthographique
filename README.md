@@ -11,7 +11,7 @@ http://michel.vancaneghem.perso.luminy.univmed.fr/cours/algo/devoir2/devoir2.pdf
 
 Dans le repertoire materiel4/ :
 dico_iso.txt : dictionnaire francais en ISO-8859-15 (a utiliser pour le correcteur)
-fichier des fautes a venir
+fautes_iso : liste de mots mal orthographié et leur correction, pour tester le correcteur
 
 pour compiler, dans dirproj/ :
 
