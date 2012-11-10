@@ -26,7 +26,6 @@ namespace nsSdD
         typedef std::vector<LinkPair_t *> VLinkPair_t;
         typedef std::vector<Key_t>        VKeys_t;
         typedef nsUtil::IHash<K>          Hashor_t;
-//        typedef CLink<std::pair<K, V> > * Iter_t;
 
       private :
         static const float s_LoadFactor;
@@ -50,9 +49,25 @@ namespace nsSdD
 
         Value_t & operator [] (const Key_t & Key)                   throw ();
         const Entry_t * Find  (const Key_t & Key)             const throw ();
+              Entry_t * Find  (const Key_t & Key)                   throw ();
 
-//        Iter_t begin ()                                       const throw ();
-//        Iter_t end   ()                                       const throw ();
+
+        class iterator : public VKeys_t::iterator
+        {
+          private :
+            CHashMap<Key_t, Value_t> * m_Map;
+
+          public :
+            iterator (CHashMap<Key_t, Value_t> *         Map,
+                      const typename VKeys_t::iterator & It) throw ();
+
+            Entry_t & operator *  (void)                     throw ();
+            Entry_t * operator -> (void)                     throw ();
+
+        }; // iterator
+
+        iterator begin ()                                           throw ();
+        iterator end   ()                                           throw ();
 
     }; // CHashMap
 

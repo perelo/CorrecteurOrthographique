@@ -136,34 +136,54 @@ const typename MAP::Entry_t * MAP::Find (const Key_t & Key) const throw ()
 
 } // Find()
 
-//TEMPL
-//typename MAP::Iter_t MAP::begin () const throw ()
-//{
-//    for (typename VLinkPair_t::const_iterator i (m_V.begin());
-//                                                        i < m_V.end(); ++i)
-//        if (*i) return *i;
-//
-//    return 0;
-//
-//} // begin()
-//
-//TEMPL
-//typename MAP::Iter_t MAP::end () const throw ()
-//{
-//    for (typename VLinkPair_t::const_reverse_iterator i (m_V.rbegin());
-//                                                        i < m_V.rend(); ++i)
-//    {
-//        if (*i)
-//        {
-//            LinkPair_t * p;
-//            for (p = *i; p != 0; ++i);
-//            return p;
-//        }
-//    }
-//
-//    return 0;
-//
-//} // end()
+// TODO use const Find() pour pas qu'il y ai de code dupplique
+TEMPL
+typename MAP::Entry_t * MAP::Find (const Key_t & Key) throw ()
+{
+    unsigned H ((*m_Hashor)(Key, GetCapacity()));
+
+    for (LinkPair_t * Elem (m_V[H]); Elem != 0; Elem = Elem->GetSuivant())
+        if (Elem->GetInfo().first == Key)
+            return &Elem->GetInfo();
+
+    return 0;
+
+} // Find()
+
+TEMPLINL
+MAP::iterator::iterator (CHashMap<Key_t, Value_t> * Map,
+                         const typename VKeys_t::iterator & It) throw ()
+ : VKeys_t::iterator (It), m_Map (Map)
+{}
+
+TEMPL
+typename MAP::iterator MAP::begin () throw ()
+{
+    return iterator(this, m_Keys.begin());
+
+} // begin()
+
+TEMPL
+typename MAP::iterator MAP::end () throw ()
+{
+    return iterator(this, m_Keys.end());
+
+} // end()
+
+TEMPLINL
+typename MAP::Entry_t & MAP::iterator::operator * () throw ()
+{
+    return * operator -> ();
+
+} // operator *()
+
+TEMPLINL
+typename MAP::Entry_t * MAP::iterator::operator -> () throw ()
+{
+    // TODO check when Find() returns null
+    return (m_Map->Find(   * (typename VKeys_t::iterator(*this))   ));
+
+} // operator ->()
 
 #undef MAP
 #undef TEMPLINL
