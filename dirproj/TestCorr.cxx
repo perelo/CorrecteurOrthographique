@@ -8,49 +8,71 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include <ctime>
 #include <fstream>
 
 #include "Correcteur.h"
 #include "CHashStr.h"
+#include "CLink.h"
 
 using namespace std;
 using namespace nsCorr;
-
-#include "MathUtil.h"
-#include "CLink.h"
+using namespace nsSdD;
 
 int main (int argc, char * argv [])
 {
     nsUtil::CHashStr Hashor;
     DicoMap_t Dico (&Hashor, 1000000);
-    TrigMap_t DicoTrig (&Hashor, 40000);
+    TrigMap_t DicoTrig (&Hashor, 7000000);
     cout << "Construction des dicos" << endl;
     clock_t start = clock();
     RemplirDicoAvecFichier("../materiel4/dico_iso.txt", Dico, DicoTrig);
     cout << "Fin construction : " << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
-/*
-    string Mot;
-    ifstream is ("test_iso.txt");
-    getline (is, Mot);
-    is.close();
-*/
+    unsigned NbMotsCorrects, NbMotsCorrige, NbMotsNonCorriges;
+    NbMotsCorrects = NbMotsCorrige = NbMotsNonCorriges = 0;
 
-    string Mot ("acceuil");
-    cout << "\nMot a corriger : " << Mot << endl;
-    vector<string> VProp;
-    if (CorrigerMot(Mot, Dico, DicoTrig, VProp))
+    ifstream is ("../materiel4/fautes_iso.txt");
+    cout << "\nCorrection des mots dans le fichier" << endl;
+    for (string Ligne, MotOrig, MotCorrige, Delim; getline(is, Ligne); )
     {
-        cout << "Corrections :" << endl;
-        for (vector<string>::const_iterator It (VProp.begin());
-                                                        It < VProp.end(); ++It)
-            cout << '\t' << *It << endl;
+        istringstream isstr(Ligne);
+        isstr >> MotOrig >> Delim >> MotCorrige;
+
+        vector<string> VProps;
+        cout << "correction du mot " << MotOrig << endl;
+        if (0 == CorrigerMot(MotOrig, Dico, DicoTrig, VProps))
+        {
+            ++NbMotsCorrects;
+            continue;
+        }
+
+        bool isCorrige (false);
+        for (vector<string>::iterator iProp (VProps.begin());
+                                                iProp < VProps.end(); ++iProp)
+        {
+            if (*iProp == MotCorrige)
+            {
+                isCorrige = true;
+                ++NbMotsCorrige;
+                break;
+            }
+            else continue;
+        }
+        if (! isCorrige)
+            ++NbMotsNonCorriges;
+
     }
-    else
-        cout << "mot juste" << endl;
+    cout << "Fin correction des mots" << endl;
+    is.close();
+
+    cout << "Bilan :\n"
+         << '\t' << NbMotsCorrects << " mots corrects\n"
+         << '\t' << NbMotsCorrige  << " mots dans la liste des suggestions\n"
+         << '\t' << NbMotsNonCorriges << " mots non corriges\n";
 
     return 0;
 
