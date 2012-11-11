@@ -79,7 +79,10 @@ int nsCorr::CorrigerMot (const string & Mot,
     for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;
                                                     Trig = Trig->GetSuivant())
     {
-        for (LINKSTR * MotTrigCommun ((*DicoTrig.Find(Trig->GetInfo())).second);
+        const TrigMap_t::Entry_t * ETrig = DicoTrig.Find(Trig->GetInfo());
+        if (! ETrig) continue;  // aucun mot ne contient ce trigramme
+
+        for (LINKSTR * MotTrigCommun (ETrig->second);
                 MotTrigCommun != 0;
                 MotTrigCommun = MotTrigCommun->GetSuivant())
             if (++Cpt[MotTrigCommun->GetInfo()] > MaxOcc) ++MaxOcc;
