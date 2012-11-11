@@ -54,12 +54,14 @@ namespace nsSdD
         class iterator : public VKeys_t::iterator
         {
           private :
+            friend class CHashMap<Key_t, Value_t>;
+
             CHashMap<Key_t, Value_t> * m_Map;
 
-          public :
             iterator (CHashMap<Key_t, Value_t> *         Map,
                       const typename VKeys_t::iterator & It) throw ();
 
+          public :
             Entry_t & operator *  (void)                     throw ();
             Entry_t * operator -> (void)                     throw ();
 
