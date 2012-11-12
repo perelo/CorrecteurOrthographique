@@ -25,7 +25,7 @@ int main (int argc, char * argv [])
 {
     nsUtil::CHashStr Hashor;
     DicoMap_t Dico (&Hashor, 1000000);
-    TrigMap_t DicoTrig (&Hashor, 7000000);
+    TrigMap_t DicoTrig (&Hashor, 40000);    // il y a au plus ~20000 trigrammes
     cout << "Construction des dicos" << endl;
     clock_t start = clock();
     RemplirDicoAvecFichier("../materiel4/dico_iso.txt", Dico, DicoTrig);
