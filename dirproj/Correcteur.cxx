@@ -9,10 +9,12 @@
 #include <string>
 #include <fstream>
 #include <algorithm>    // sort
+#include <limits>       // epsilon
 
 #include "Correcteur.h"
 #include "CHashMap.h"
 #include "CLink.h"
+#include <cmath>        // abs
 
 #include "CHashStr.h"
 #include "Levenshtein.h"
@@ -103,7 +105,6 @@ int nsCorr::CorrigerMot (const string & Mot,
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
     if (VProp.size() > 10)
         VProp.erase(VProp.begin(), VProp.end() - 10);
-
     return 1;
 }
 
@@ -134,7 +135,8 @@ inline
 bool nsCorr::CompLevenshteinC::operator () (const string & A, const string & B)
                                                              const throw ()
 {
-    return LevenshteinC(A, Mot) < LevenshteinC(B, Mot);
+    return abs(LevenshteinC(A, Mot) - LevenshteinC(B, Mot)) <
+                                            numeric_limits<float>::epsilon();
 
 } // operator()()
 
