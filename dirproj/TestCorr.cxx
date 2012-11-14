@@ -37,6 +37,7 @@ int main (int argc, char * argv [])
 
     ifstream is ("../materiel4/fautes_iso.txt");
     cout << "\nCorrection des mots dans le fichier" << endl;
+    start = clock();
     for (string Ligne, MotOrig, MotCorrige, Delim; getline(is, Ligne); )
     {
         istringstream isstr(Ligne);
@@ -66,10 +67,11 @@ int main (int argc, char * argv [])
             ++NbMotsNonCorriges;
 
     }
+    float temps ((clock() - start) / float(CLOCKS_PER_SEC));
     cout << "Fin correction des mots" << endl;
     is.close();
 
-    cout << "Bilan :\n"
+    cout << "Bilan : " << temps * 1000 << "ms\n"
          << '\t' << NbMotsCorrects << " mots corrects\n"
          << '\t' << NbMotsCorrige  << " mots dans la liste des suggestions\n"
          << '\t' << NbMotsNonCorriges << " mots non corriges\n";
