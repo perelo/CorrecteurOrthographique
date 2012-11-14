@@ -6,40 +6,21 @@
  */
 
 #include <iostream>
+#include <string>
 
 #include "Jaccard.h"
+#include "Correcteur.h"
 
 using namespace std;
 using namespace nsUtil;
-
-namespace
-{
-    template <typename T>
-    void AffichBin (T x)
-    {
-        for (unsigned i(sizeof(x)); i--; )
-        {
-            for (unsigned j(8); j--; )
-                cout << (1 & (x >> (i*8 + j)));
-            cout << ' ';
-        }
-
-    } // AffichBin
-
-} // anonymous namespace
+using namespace nsCorr;
 
 int main ()
 {
-    int A (13), B (7);
-
-    cout << A << "\n\t";
-    AffichBin(A);
-    cout << '\n' << B << "\n\t";
-    AffichBin(B);
-    cout << endl;
-
-    cout << "J(" << A << ", " << B << ") = "
-         << Jaccard(A, B) << endl;
+    string MotOrig ("$accueil$");
+    string MotDest ("$acceuil$");
+    cout << "Jaccard(" << MotOrig << ", " << MotDest << ") = "
+         << Jaccard(GetTrigrammes(MotOrig), GetTrigrammes(MotDest)) << endl;
 
     return 0;
 
