@@ -20,7 +20,7 @@ PROJET_O = Levenshtein.o Jaccard.o MathUtil.o IHash.o IComp.o \
 # Edition de liens
 #
 $(nom) : $(nom).o $(PROJET_O)
-	g++ -o $(nom).run $(nom).o $(PROJET_O)
+	$(CC) -o $(nom).run $(nom).o $(PROJET_O)
 #
 dep : $(PROJET_O)
 #
