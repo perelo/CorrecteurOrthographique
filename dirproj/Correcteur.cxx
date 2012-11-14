@@ -76,6 +76,7 @@ int nsCorr::CorrigerMot (const string & Mot,
     AjouterDelimiteur(MotDelim);
 
     nsUtil::CHashStr Hashor;
+    // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
     unsigned MaxOcc (0);
     for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;

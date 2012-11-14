@@ -16,11 +16,11 @@
 
 namespace nsCorr
 {
-    typedef nsSdD::CHashMap<std::string, std::string> DicoMap_t;
+    typedef nsSdD::CHashMap<std::string, std::string>                DicoMap_t;
     typedef nsSdD::CHashMap<std::string, nsSdD::CLink<std::string>*> TrigMap_t;
     typedef nsSdD::CHashMap<std::string, unsigned>                   StrCpt_t;
 
-    void AjouterDelimiteur (std::string & Mot)                  throw ();
+    void AjouterDelimiteur (std::string & Mot)                      throw ();
     nsSdD::CLink<std::string> * GetTrigrammes (const std::string & Mot)
                                                                     throw ();
 
