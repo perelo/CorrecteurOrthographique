@@ -48,11 +48,11 @@ void nsCorr::RemplirDicoAvecFichier (const string & PathDico,
         return;
     }
 
-    for (string Mot, MotDelim; getline(is, Mot); )
+    for (string Mot; getline(is, Mot); )
     {
         Dico[Mot] = Mot;
 
-        MotDelim = Mot;
+        string MotDelim (Mot);
         AjouterDelimiteur(MotDelim);
         for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;
                                                     Trig = Trig->GetSuivant())
