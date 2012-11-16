@@ -7,10 +7,12 @@
 #ifndef __IHASH_H__
 #define __IHASH_H__
 
+#include <functional>
+
 namespace nsUtil
 {
     template <class T>
-    class IHash
+    class IHash : public std::binary_function <T, T, bool>
     {
       public :
         virtual ~IHash (void)                                     throw ();
