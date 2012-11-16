@@ -28,9 +28,12 @@ using namespace nsUtil;     // Jaccard, Levenshtein
 
 LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
 {
+    string MotDelim (Mot);
+    AjouterDelimiteur (MotDelim);
+
     LINKSTR * TrigList = 0;
-    for (size_t i (0); i < Mot.size() - 2; ++i)
-        TrigList = new LINKSTR(string(Mot, i, 3), TrigList);
+    for (size_t i (0); i < MotDelim.size() - 2; ++i)
+        TrigList = new LINKSTR(string(MotDelim, i, 3), TrigList);
 
     return TrigList;
 
@@ -53,9 +56,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
     {
         Dico[Mot] = Mot;
 
-        string MotDelim (Mot);
-        AjouterDelimiteur(MotDelim);
-        for (LINKSTR * Trig = MotToTrigs[Mot] = GetTrigrammes(MotDelim);
+        for (LINKSTR * Trig = MotToTrigs[Mot] = GetTrigrammes(Mot);
              Trig;
              Trig = Trig->GetSuivant())
             TrigToMots[Trig->GetInfo()] =
@@ -76,22 +77,19 @@ int nsCorr::CorrigerMot (const string & Mot,
 {
     if (Dico.Find(Mot)) return 0;
 
-    string MotDelim = Mot;
-    AjouterDelimiteur(MotDelim);
-
     nsUtil::CHashStr Hashor;
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
     unsigned MaxOcc (0);
     LINKSTR * Trig;
-    for (Trig = GetTrigrammes(MotDelim); Trig != 0; Trig = Trig->GetSuivant())
+    for (Trig = GetTrigrammes(Mot); Trig != 0; Trig = Trig->GetSuivant())
     {
         const TrigMap_t::Entry_t * ETrig = TrigToMots.Find(Trig->GetInfo());
         if (! ETrig) continue;  // aucun mot ne contient ce trigramme
 
         for (LINKSTR * MotTrigCommun (ETrig->second);
-                MotTrigCommun != 0;
-                MotTrigCommun = MotTrigCommun->GetSuivant())
+             MotTrigCommun != 0;
+             MotTrigCommun = MotTrigCommun->GetSuivant())
             if (++Cpt[MotTrigCommun->GetInfo()] > MaxOcc) ++MaxOcc;
     }
     delete Trig;
