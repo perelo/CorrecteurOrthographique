@@ -23,11 +23,11 @@ using namespace nsSdD;
 int main (int argc, char * argv [])
 {
     nsUtil::CHashStr Hashor;
-    DicoMap_t Dico (&Hashor, 1000000);
-    TrigMap_t DicoTrig (&Hashor, 40000);    // il y a au plus ~20000 trigrammes
+    DicoMap_t Dico       (&Hashor, 1000000);
+    TrigMap_t TrigToMots (&Hashor, 40000);
     cout << "Construction des dicos" << endl;
     clock_t start = clock();
-    RemplirDicosAvecFichier("../materiel4/dico_iso.txt", Dico, DicoTrig);
+    RemplirDicosAvecFichier("../materiel4/dico_iso.txt", Dico, TrigToMots);
     cout << "Fin construction : " << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
@@ -45,7 +45,7 @@ int main (int argc, char * argv [])
 
         vector<string> VProps;
         cout << "correction du mot " << MotOrig << endl;
-        if (0 == CorrigerMot(MotOrig, Dico, DicoTrig, VProps) ||
+        if (0 == CorrigerMot(MotOrig, Dico, TrigToMots, VProps) ||
             *VProps.begin() == MotCorrige)
         {
             ++NbMotsCorrige;

@@ -38,7 +38,7 @@ LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
 
 void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
                                       DicoMap_t & Dico,
-                                      TrigMap_t & DicoTrig) throw ()
+                                      TrigMap_t & TrigToMots) throw ()
 {
     ifstream is (PathDico.c_str());
     if (!is)
@@ -56,8 +56,8 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
         AjouterDelimiteur(MotDelim);
         for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;
                                                     Trig = Trig->GetSuivant())
-            DicoTrig[Trig->GetInfo()] =
-                                    new LINKSTR(Mot, DicoTrig[Trig->GetInfo()]);
+            TrigToMots[Trig->GetInfo()] =
+                                    new LINKSTR(Mot, TrigToMots[Trig->GetInfo()]);
         // TODO modifier pour qu'on ne fasse qu'un appel a [] (ici, 2x hash)
     }
 
@@ -67,7 +67,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 
 int nsCorr::CorrigerMot (const string & Mot,
                          const DicoMap_t & Dico,
-                         const TrigMap_t & DicoTrig,
+                         const TrigMap_t & TrigToMots,
                          vector<string> & VProp)
 {
     if (Dico.Find(Mot)) return 0;
@@ -82,7 +82,7 @@ int nsCorr::CorrigerMot (const string & Mot,
     for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;
                                                     Trig = Trig->GetSuivant())
     {
-        const TrigMap_t::Entry_t * ETrig = DicoTrig.Find(Trig->GetInfo());
+        const TrigMap_t::Entry_t * ETrig = TrigToMots.Find(Trig->GetInfo());
         if (! ETrig) continue;  // aucun mot ne contient ce trigramme
 
         for (LINKSTR * MotTrigCommun (ETrig->second);
