@@ -26,6 +26,7 @@ namespace nsCorr
 
     void RemplirDicosAvecFichier (const std::string & PathDico,
                                   DicoMap_t & Dico,
+                                  TrigMap_t & MotToTrigs,
                                   TrigMap_t & TrigToMots) throw ();
 
     /*
@@ -34,7 +35,8 @@ namespace nsCorr
      */
     int CorrigerMot (const std::string & Mot,
                      const DicoMap_t & Dico,
-                     const TrigMap_t & DicoTrig,
+                     const TrigMap_t & MotToTrigs,
+                     const TrigMap_t & TrigToMots,
                      std::vector<std::string> & VProp);
 
     class CompJaccard : public nsUtil::IComp <std::string>

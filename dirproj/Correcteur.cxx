@@ -36,8 +36,11 @@ LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
 
 } // GetTrigrammes()
 
+#include <iostream>
+using namespace std;
 void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
                                       DicoMap_t & Dico,
+                                      TrigMap_t & MotToTrigs,
                                       TrigMap_t & TrigToMots) throw ()
 {
     ifstream is (PathDico.c_str());
@@ -54,11 +57,13 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 
         string MotDelim (Mot);
         AjouterDelimiteur(MotDelim);
-        for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;
-                                                    Trig = Trig->GetSuivant())
+        for (LINKSTR * Trig = MotToTrigs[Mot] = GetTrigrammes(MotDelim);
+             Trig;
+             Trig = Trig->GetSuivant())
             TrigToMots[Trig->GetInfo()] =
                                     new LINKSTR(Mot, TrigToMots[Trig->GetInfo()]);
-        // TODO modifier pour qu'on ne fasse qu'un appel a [] (ici, 2x hash)
+            // TODO modifier pour qu'on ne fasse qu'un appel a [] (ici, 2x hash)
+
     }
 
     is.close();
@@ -67,6 +72,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 
 int nsCorr::CorrigerMot (const string & Mot,
                          const DicoMap_t & Dico,
+                         const TrigMap_t & MotToTrigs,
                          const TrigMap_t & TrigToMots,
                          vector<string> & VProp)
 {
@@ -106,6 +112,7 @@ int nsCorr::CorrigerMot (const string & Mot,
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
     if (VProp.size() > 10)
         VProp.erase(VProp.begin(), VProp.end() - 10);
+
     return 1;
 }
 
