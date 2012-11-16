@@ -8,10 +8,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <sstream>
+#include <fstream>
 
 #include <ctime>
-#include <fstream>
 
 #include "Correcteur.h"
 #include "CHashStr.h"
@@ -38,10 +37,11 @@ int main (int argc, char * argv [])
     ifstream is ("../materiel4/fautes_iso.txt");
     cout << "\nCorrection des mots dans le fichier" << endl;
     start = clock();
-    for (string Ligne, MotOrig, MotCorrige, Delim; getline(is, Ligne); )
+    for (string Ligne, Delim (">"); getline(is, Ligne); )
     {
-        istringstream isstr(Ligne);
-        isstr >> MotOrig >> Delim >> MotCorrige;
+        size_t PosDelim (Ligne.find_first_of(Delim));
+        string MotOrig    (Ligne.begin(), Ligne.begin()+PosDelim-1);
+        string MotCorrige (Ligne.begin() + PosDelim+2, Ligne.end());
 
         vector<string> VProps;
         cout << "correction du mot " << MotOrig << endl;
