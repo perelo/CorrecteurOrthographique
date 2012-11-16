@@ -31,8 +31,8 @@ int main (int argc, char * argv [])
     cout << "Fin construction : " << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
-    unsigned NbMotsCorrects, NbMotsCorrige, NbMotsNonCorriges;
-    NbMotsCorrects = NbMotsCorrige = NbMotsNonCorriges = 0;
+    unsigned NbMotsDansProps, NbMotsCorrige, NbMotsNonCorriges;
+    NbMotsDansProps = NbMotsCorrige = NbMotsNonCorriges = 0;
 
     ifstream is ("../materiel4/fautes_iso.txt");
     cout << "\nCorrection des mots dans le fichier" << endl;
@@ -45,36 +45,34 @@ int main (int argc, char * argv [])
 
         vector<string> VProps;
         cout << "correction du mot " << MotOrig << endl;
-        if (0 == CorrigerMot(MotOrig, Dico, DicoTrig, VProps))
+        if (0 == CorrigerMot(MotOrig, Dico, DicoTrig, VProps) ||
+            *VProps.begin() == MotCorrige)
         {
-            ++NbMotsCorrects;
+            ++NbMotsCorrige;
             continue;
         }
 
-        bool isCorrige (false);
-        for (vector<string>::iterator iProp (VProps.begin());
-                                                iProp < VProps.end(); ++iProp)
+        vector<string>::iterator iProp (VProps.begin());
+        for (; iProp < VProps.end(); ++iProp)
         {
             if (*iProp == MotCorrige)
             {
-                isCorrige = true;
-                ++NbMotsCorrige;
+                ++NbMotsDansProps;
                 break;
             }
-            else continue;
         }
-        if (! isCorrige)
+        if (iProp == VProps.end())
             ++NbMotsNonCorriges;
 
     }
+    is.close();
     float temps ((clock() - start) / float(CLOCKS_PER_SEC));
     cout << "Fin correction des mots" << endl;
-    is.close();
 
     cout << "Bilan : " << temps * 1000 << "ms\n"
-         << '\t' << NbMotsCorrects << " mots corrects\n"
-         << '\t' << NbMotsCorrige  << " mots dans la liste des suggestions\n"
-         << '\t' << NbMotsNonCorriges << " mots non corriges\n";
+         << '\t' << NbMotsCorrige     << " bonnes corrections\n"
+         << '\t' << NbMotsDansProps   << " dans la liste des propositions\n"
+         << '\t' << NbMotsNonCorriges << " non corriges" << endl;
 
     return 0;
 
