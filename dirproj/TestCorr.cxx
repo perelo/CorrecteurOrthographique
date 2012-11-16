@@ -27,7 +27,7 @@ int main (int argc, char * argv [])
     TrigMap_t DicoTrig (&Hashor, 40000);    // il y a au plus ~20000 trigrammes
     cout << "Construction des dicos" << endl;
     clock_t start = clock();
-    RemplirDicoAvecFichier("../materiel4/dico_iso.txt", Dico, DicoTrig);
+    RemplirDicosAvecFichier("../materiel4/dico_iso.txt", Dico, DicoTrig);
     cout << "Fin construction : " << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 

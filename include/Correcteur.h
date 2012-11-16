@@ -24,9 +24,9 @@ namespace nsCorr
     nsSdD::CLink<std::string> * GetTrigrammes (const std::string & Mot)
                                                                     throw ();
 
-    void RemplirDicoAvecFichier (const std::string & PathDico,
-                                 DicoMap_t & Dico,
-                                 TrigMap_t & Trig) throw ();
+    void RemplirDicosAvecFichier (const std::string & PathDico,
+                                  DicoMap_t & Dico,
+                                  TrigMap_t & Trig) throw ();
 
     /*
      * renvoie 0 si le mot est present dans le dictionnaire, 1 sinon

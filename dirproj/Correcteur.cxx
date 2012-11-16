@@ -36,9 +36,9 @@ LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
 
 } // GetTrigrammes()
 
-void nsCorr::RemplirDicoAvecFichier (const string & PathDico,
-                                     DicoMap_t & Dico,
-                                     TrigMap_t & DicoTrig) throw ()
+void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
+                                      DicoMap_t & Dico,
+                                      TrigMap_t & DicoTrig) throw ()
 {
     ifstream is (PathDico.c_str());
     if (!is)
