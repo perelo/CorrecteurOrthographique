@@ -36,8 +36,6 @@ LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
 
 } // GetTrigrammes()
 
-#include <iostream>
-using namespace std;
 void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
                                       DicoMap_t & Dico,
                                       TrigMap_t & MotToTrigs,
@@ -85,8 +83,8 @@ int nsCorr::CorrigerMot (const string & Mot,
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
     unsigned MaxOcc (0);
-    for (LINKSTR * Trig (GetTrigrammes(MotDelim)); Trig != 0;
-                                                    Trig = Trig->GetSuivant())
+    LINKSTR * Trig;
+    for (Trig = GetTrigrammes(MotDelim); Trig != 0; Trig = Trig->GetSuivant())
     {
         const TrigMap_t::Entry_t * ETrig = TrigToMots.Find(Trig->GetInfo());
         if (! ETrig) continue;  // aucun mot ne contient ce trigramme
@@ -96,6 +94,7 @@ int nsCorr::CorrigerMot (const string & Mot,
                 MotTrigCommun = MotTrigCommun->GetSuivant())
             if (++Cpt[MotTrigCommun->GetInfo()] > MaxOcc) ++MaxOcc;
     }
+    delete Trig;
 
     VProp.empty();
 
