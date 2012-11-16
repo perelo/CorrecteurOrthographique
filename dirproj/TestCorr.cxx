@@ -70,6 +70,7 @@ int main (int argc, char * argv [])
 
     }
     is.close();
+
     float temps ((clock() - start) / float(CLOCKS_PER_SEC));
     cout << "Fin correction des mots" << endl;
 
@@ -77,6 +78,15 @@ int main (int argc, char * argv [])
          << '\t' << NbMotsCorrige     << " bonnes corrections\n"
          << '\t' << NbMotsDansProps   << " dans la liste des propositions\n"
          << '\t' << NbMotsNonCorriges << " non corriges" << endl;
+
+    cout << "Nettoyage..." << endl;
+    for (TrigMap_t::iterator i (MotToTrigs.begin());
+         i != MotToTrigs.end();
+         ++i) delete i->second;
+    for (TrigMap_t::iterator i (TrigToMots.begin());
+         i != TrigToMots.end();
+         ++i) delete i->second;
+    cout << "OK !" << endl;
 
     return 0;
 
