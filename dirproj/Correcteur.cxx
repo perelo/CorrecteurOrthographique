@@ -60,7 +60,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
              Trig;
              Trig = Trig->GetSuivant())
             TrigToMots[Trig->GetInfo()] =
-                                    new LINKSTR(Mot, TrigToMots[Trig->GetInfo()]);
+                                new LINKSTR(Mot, TrigToMots[Trig->GetInfo()]);
             // TODO modifier pour qu'on ne fasse qu'un appel a [] (ici, 2x hash)
 
     }
@@ -77,6 +77,7 @@ int nsCorr::CorrigerMot (const string & Mot,
 {
     if (Dico.Find(Mot)) return 0;
 
+    VProp.clear();
     nsUtil::CHashStr Hashor;
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
@@ -92,8 +93,6 @@ int nsCorr::CorrigerMot (const string & Mot,
              MotTrigCommun = MotTrigCommun->GetSuivant())
             if (++Cpt[MotTrigCommun->GetInfo()] > MaxOcc) ++MaxOcc;
     }
-
-    VProp.empty();
 
     for (StrCpt_t::iterator It (Cpt.begin()); It < Cpt.end(); ++It)
     {
