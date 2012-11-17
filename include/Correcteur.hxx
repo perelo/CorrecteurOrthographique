@@ -34,8 +34,9 @@ inline
 bool nsCorr::CompJaccard::operator () (const std::string & A,
                                        const std::string & B) const throw ()
 {
-    return false;
-    //return Jaccard(A.c_str(), Mot.c_str()) < Jaccard(B.c_str(), Mot.c_str());
+    return nsUtil::Jaccard(GetTrigrammes(A), GetTrigrammes(Mot)) -
+           nsUtil::Jaccard(GetTrigrammes(B), GetTrigrammes(Mot)) >
+           std::numeric_limits<float>::epsilon();
 
 } // operator()()
 

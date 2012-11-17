@@ -81,10 +81,10 @@ int nsCorr::CorrigerMot (const string & Mot,
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
     unsigned MaxOcc (0);
-    LINKSTR * Trig;
-    for (Trig = GetTrigrammes(Mot); Trig != 0; Trig = Trig->GetSuivant())
+    LINKSTR * TrigsMot = GetTrigrammes(Mot);
+    for (LINKSTR * T (TrigsMot); T; T = T->GetSuivant())
     {
-        const TrigMap_t::Entry_t * ETrig = TrigToMots.Find(Trig->GetInfo());
+        const TrigMap_t::Entry_t * ETrig = TrigToMots.Find(T->GetInfo());
         if (! ETrig) continue;  // aucun mot ne contient ce trigramme
 
         for (LINKSTR * MotTrigCommun (ETrig->second);
@@ -92,19 +92,18 @@ int nsCorr::CorrigerMot (const string & Mot,
              MotTrigCommun = MotTrigCommun->GetSuivant())
             if (++Cpt[MotTrigCommun->GetInfo()] > MaxOcc) ++MaxOcc;
     }
-    delete Trig;
 
     VProp.empty();
 
     for (StrCpt_t::iterator It (Cpt.begin()); It < Cpt.end(); ++It)
     {
-        if (It->second == MaxOcc /*&&
-            Jaccard(E.first.c_str(), Mot.c_str()) > 0.2*/)
+        if (It->second == MaxOcc &&
+            Jaccard(GetTrigrammes(It->first), TrigsMot) > 0.2)
             VProp.push_back(It->first);
     }
+    delete TrigsMot;
 
-    sort(VProp.begin(), VProp.end(), CompJaccard(Mot));
-    // TODO faire quelque chose
+    //sort(VProp.begin(), VProp.end(), CompJaccard(Mot));
 
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
     if (VProp.size() > 10)
