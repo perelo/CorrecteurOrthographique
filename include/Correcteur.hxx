@@ -51,7 +51,7 @@ bool nsCorr::CompLevenshteinC::operator () (const std::string & A,
                                             const std::string & B)
                                                                  const throw ()
 {
-    return std::abs(nsUtil::LevenshteinC(A, Mot) - nsUtil::LevenshteinC(B, Mot)) <
+    return nsUtil::LevenshteinC(A, Mot) - nsUtil::LevenshteinC(B, Mot) >
            std::numeric_limits<float>::epsilon();
 
 } // operator()()
