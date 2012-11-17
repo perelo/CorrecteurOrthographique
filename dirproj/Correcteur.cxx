@@ -111,6 +111,7 @@ int nsCorr::CorrigerMot (const string & Mot,
         VProp.erase(VProp.begin(), VProp.end() - 10);
 
     return 1;
-}
+
+} // CorrigetMot()
 
 #undef LINKSTR
