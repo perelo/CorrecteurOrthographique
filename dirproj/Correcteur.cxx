@@ -113,36 +113,4 @@ int nsCorr::CorrigerMot (const string & Mot,
     return 1;
 }
 
-inline
-nsCorr::CompJaccard::CompJaccard (const string & Mot) throw ()
- : Mot (Mot) {}
-
-inline
-nsCorr::CompJaccard::~CompJaccard (void) throw () {}
-
-inline
-bool nsCorr::CompJaccard::operator () (const string & A, const string & B)
-                                                             const throw ()
-{
-    return false;
-    //return Jaccard(A.c_str(), Mot.c_str()) < Jaccard(B.c_str(), Mot.c_str());
-
-} // operator()()
-
-inline
-nsCorr::CompLevenshteinC::CompLevenshteinC (const string & Mot) throw ()
- : Mot (Mot) {}
-
-inline
-nsCorr::CompLevenshteinC::~CompLevenshteinC (void) throw () {}
-
-inline
-bool nsCorr::CompLevenshteinC::operator () (const string & A, const string & B)
-                                                             const throw ()
-{
-    return abs(LevenshteinC(A, Mot) - LevenshteinC(B, Mot)) <
-                                            numeric_limits<float>::epsilon();
-
-} // operator()()
-
 #undef LINKSTR
