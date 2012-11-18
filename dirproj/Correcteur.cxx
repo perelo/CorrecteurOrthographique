@@ -106,10 +106,10 @@ int nsCorr::CorrigerMot (const string & Mot,
 
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
     if (VProp.size() > 10)
-        VProp.erase(VProp.begin(), VProp.end() - 10);
+        VProp.erase(VProp.begin()+10, VProp.end());
 
     return 1;
 
-} // CorrigetMot()
+} // CorrigerMot()
 
 #undef LINKSTR
