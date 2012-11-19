@@ -85,7 +85,6 @@ void nsCorr::CorrigerMot (const string & Mot,
     nsUtil::CHashStr Hashor;
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
-    unsigned MaxOcc (0);
     LINKSTR * TrigsMot = GetTrigrammes(Mot);
     for (LINKSTR * T (TrigsMot); T; T = T->GetSuivant())
     {
@@ -95,12 +94,12 @@ void nsCorr::CorrigerMot (const string & Mot,
         for (LINKSTR * MotTrigCommun (ETrig->second);
              MotTrigCommun != 0;
              MotTrigCommun = MotTrigCommun->GetSuivant())
-            if (++Cpt[MotTrigCommun->GetInfo()] > MaxOcc) ++MaxOcc;
+            ++Cpt[MotTrigCommun->GetInfo()];
     }
 
     for (StrCpt_t::iterator It (Cpt.begin()); It < Cpt.end(); ++It)
     {
-        if (It->second == MaxOcc &&
+        if (It->second >= Mot.size()/2 &&
             Jaccard(GetTrigrammes(It->first), TrigsMot) > 0.2)
             VProp.push_back(It->first);
     }
