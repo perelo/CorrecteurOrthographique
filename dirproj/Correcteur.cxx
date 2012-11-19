@@ -69,15 +69,19 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 
 } // RemplirDicoAvecFichier()
 
-int nsCorr::CorrigerMot (const string & Mot,
-                         const DicoMap_t & Dico,
-                         const TrigMap_t & MotToTrigs,
-                         const TrigMap_t & TrigToMots,
-                         vector<string> & VProp)
+void nsCorr::CorrigerMot (const string & Mot,
+                          const DicoMap_t & Dico,
+                          const TrigMap_t & MotToTrigs,
+                          const TrigMap_t & TrigToMots,
+                          vector<string> & VProp)
 {
-    if (Dico.Find(Mot)) return 0;
-
     VProp.clear();
+    if (Dico.Find(Mot))
+    {
+        VProp.push_back(Mot);
+        return;
+    }
+
     nsUtil::CHashStr Hashor;
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
     StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
@@ -107,8 +111,6 @@ int nsCorr::CorrigerMot (const string & Mot,
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
     if (VProp.size() > 10)
         VProp.erase(VProp.begin()+10, VProp.end());
-
-    return 1;
 
 } // CorrigerMot()
 

@@ -33,11 +33,11 @@ namespace nsCorr
      * renvoie 0 si le mot est present dans le dictionnaire, 1 sinon
      * et rempli VProp de propositions
      */
-    int CorrigerMot (const std::string & Mot,
-                     const DicoMap_t & Dico,
-                     const TrigMap_t & MotToTrigs,
-                     const TrigMap_t & TrigToMots,
-                     std::vector<std::string> & VProp);
+    void CorrigerMot (const std::string & Mot,
+                      const DicoMap_t & Dico,
+                      const TrigMap_t & MotToTrigs,
+                      const TrigMap_t & TrigToMots,
+                      std::vector<std::string> & VProp);
 
     class CompJaccard : public nsUtil::IComp <std::string>
     {

@@ -35,8 +35,8 @@ int main (int argc, char * argv [])
     cout << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
-    unsigned NbMotsDansProps, NbMotsCorrige, NbMotsNonCorriges;
-    NbMotsDansProps = NbMotsCorrige = NbMotsNonCorriges = 0;
+    unsigned NbMotsDansProps, NbMotsCorrige, NbMotsNonCorrige;
+    NbMotsDansProps = NbMotsCorrige = NbMotsNonCorrige = 0;
 
     ifstream is ("../materiel4/fautes_iso.txt");
     cout << "\nCorrection des mots dans le fichier" << endl;
@@ -49,24 +49,31 @@ int main (int argc, char * argv [])
 
         vector<string> VProps;
         cout << "correction du mot " << MotOrig << endl;
-        if (0 == CorrigerMot(MotOrig, Dico, MotToTrigs, TrigToMots, VProps) ||
-            *VProps.begin() == MotCorrige)
+        CorrigerMot(MotOrig, Dico, MotToTrigs, TrigToMots, VProps);
+        if (VProps.empty())
+        {
+            ++NbMotsNonCorrige;
+            continue;
+        }
+        else if (VProps[0] == MotCorrige)
         {
             ++NbMotsCorrige;
             continue;
         }
-
-        vector<string>::iterator iProp (VProps.begin());
-        for (; iProp < VProps.end(); ++iProp)
+        else
         {
-            if (*iProp == MotCorrige)
+            vector<string>::iterator iProp (VProps.begin()+1);
+            for (; iProp < VProps.end(); ++iProp)
             {
-                ++NbMotsDansProps;
-                break;
+                if (*iProp == MotCorrige)
+                {
+                    ++NbMotsDansProps;
+                    break;
+                }
             }
+            if (iProp == VProps.end())
+                ++NbMotsNonCorrige;
         }
-        if (iProp == VProps.end())
-            ++NbMotsNonCorriges;
 
     }
     is.close();
@@ -75,9 +82,9 @@ int main (int argc, char * argv [])
     cout << "Fin correction des mots" << endl;
 
     cout << "Bilan : " << temps * 1000 << "ms\n"
-         << '\t' << NbMotsCorrige     << " bonnes corrections\n"
-         << '\t' << NbMotsDansProps   << " dans la liste des propositions\n"
-         << '\t' << NbMotsNonCorriges << " non corriges" << endl;
+         << '\t' << NbMotsCorrige    << " bonnes corrections\n"
+         << '\t' << NbMotsDansProps  << " dans la liste des propositions\n"
+         << '\t' << NbMotsNonCorrige << " non corriges" << endl;
 
     cout << "Nettoyage..." << endl;
     for (TrigMap_t::iterator i (MotToTrigs.begin());
