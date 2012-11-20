@@ -21,7 +21,7 @@
 #define MAP nsSdD::CHashMap<K, V>
 
 TEMPL
-const float    MAP::s_LoadFactor = 0.75;
+const float MAP::s_LoadFactor = 0.75;
 
 TEMPL
 const unsigned MAP::s_DfltInitialCapacity = 16;
@@ -156,8 +156,7 @@ typename MAP::Entry_t * MAP::Find (const Key_t & Key) throw ()
 TEMPLINL
 MAP::iterator::iterator (CHashMap<Key_t, Value_t> * Map,
                          const typename VKeys_t::iterator & It) throw ()
- : VKeys_t::iterator (It), m_Map (Map)
-{}
+ : VKeys_t::iterator (It), m_Map (Map) {}
 
 TEMPL
 typename MAP::iterator MAP::begin () throw ()
@@ -184,7 +183,7 @@ TEMPLINL
 typename MAP::Entry_t * MAP::iterator::operator -> () throw ()
 {
     // TODO check when Find() returns null
-    return (m_Map->Find(   * (typename VKeys_t::iterator(*this))   ));
+    return m_Map->Find( *(typename VKeys_t::iterator(*this)) );
 
 } // operator ->()
 
