@@ -32,8 +32,10 @@ LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
     AjouterDelimiteur (MotDelim);
 
     LINKSTR * TrigList = 0;
-    for (size_t i (0); i < MotDelim.size() - 2; ++i)
-        TrigList = new LINKSTR(string(MotDelim, i, 3), TrigList);
+    for (string::const_iterator i (MotDelim.begin()); i < MotDelim.end()-2; ++i)
+        TrigList = new LINKSTR(string(i, i + 3), TrigList);
+    //for (string::size_type i (0); i < MotDelim.size()-2; ++i)
+        //TrigList = new LINKSTR(string(MotDelim, i, 3), TrigList);
 
     return TrigList;
 
