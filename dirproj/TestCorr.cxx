@@ -24,7 +24,7 @@ int main (int argc, char * argv [])
 {
     nsUtil::CHashStr Hashor;
     DicoMap_t Dico       (&Hashor, 1000000);
-    TrigMap_t DicoTrigs (&Hashor, 40000);
+    TrigMap_t DicoTrigs  (&Hashor, 20000);  // assez mm si 42^3 trigs possibles
     cout << "Indexation des mots du dictionnaire... " << flush;
     clock_t start = clock();
     RemplirDicosAvecFichier("../materiel4/dico_iso.txt", Dico, DicoTrigs);
