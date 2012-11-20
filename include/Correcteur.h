@@ -26,7 +26,7 @@ namespace nsCorr
 
     void RemplirDicosAvecFichier (const std::string & PathDico,
                                   DicoMap_t & Dico,
-                                  TrigMap_t & TrigToMots) throw ();
+                                  TrigMap_t & DicoTrigs) throw ();
 
     /*
      * renvoie 0 si le mot est present dans le dictionnaire, 1 sinon
@@ -34,7 +34,7 @@ namespace nsCorr
      */
     void CorrigerMot (const std::string & Mot,
                       const DicoMap_t & Dico,
-                      const TrigMap_t & TrigToMots,
+                      const TrigMap_t & DicoTrigs,
                       std::vector<std::string> & VProp);
 
     class CompJaccard : public nsUtil::IComp <std::string>
