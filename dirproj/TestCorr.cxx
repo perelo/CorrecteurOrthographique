@@ -54,6 +54,7 @@ int main (int argc, char * argv [])
         else if (VProps[0] == MotCorrige)
         {
             ++NbMotsCorrige;
+            ++NbMotsDansProps;
             continue;
         }
         else
