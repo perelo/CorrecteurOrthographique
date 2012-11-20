@@ -27,18 +27,12 @@ TEMPL
 const unsigned MAP::s_DfltInitialCapacity = 16;
 
 TEMPLINL
-MAP::CHashMap (Hashor_t * Hashor, const unsigned Cap) throw ()
+MAP::CHashMap (Hashor_t * Hashor,
+               const unsigned Cap /* = s_DfltInitialCapacity*/) throw ()
  : m_NbElem (0), m_Threshold (Cap * s_LoadFactor), m_V (Cap)
 {
     m_Hashor = Hashor;
 }
-
-//TEMPLINL
-//MAP::CHashMap (Hashor_t * Hashor) throw ()
-// : m_NbElem (0), m_V (16)
-//{
-//    m_Hashor = Hashor;
-//}
 
 TEMPLINL
 MAP::~CHashMap () throw ()

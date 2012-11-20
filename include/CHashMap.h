@@ -40,8 +40,8 @@ namespace nsSdD
         void Resize (unsigned Cap)                                  throw ();
 
       public :
-        CHashMap (Hashor_t * Hashor, const unsigned Cap)            throw ();
-        //CHashMap (Hashor_t * Hashor)                                throw ();
+        CHashMap (Hashor_t * Hashor,
+                  const unsigned Cap = s_DfltInitialCapacity)       throw ();
         ~CHashMap (void)                                            throw ();
 
         unsigned        GetNbElem   (void)                    const throw ();
