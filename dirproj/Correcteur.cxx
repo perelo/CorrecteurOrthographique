@@ -43,7 +43,6 @@ LINKSTR * nsCorr::GetTrigrammes (const string & Mot) throw ()
 
 void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
                                       DicoMap_t & Dico,
-                                      TrigMap_t & MotToTrigs,
                                       TrigMap_t & TrigToMots) throw ()
 {
     ifstream is (PathDico.c_str());
@@ -58,7 +57,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
     {
         Dico[Mot] = Mot;
 
-        for (LINKSTR * Trig = MotToTrigs[Mot] = GetTrigrammes(Mot);
+        for (LINKSTR * Trig = GetTrigrammes(Mot);
              Trig;
              Trig = Trig->GetSuivant())
             TrigToMots[Trig->GetInfo()] =
@@ -73,7 +72,6 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 
 void nsCorr::CorrigerMot (const string & Mot,
                           const DicoMap_t & Dico,
-                          const TrigMap_t & MotToTrigs,
                           const TrigMap_t & TrigToMots,
                           vector<string> & VProp)
 {

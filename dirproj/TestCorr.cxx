@@ -24,14 +24,10 @@ int main (int argc, char * argv [])
 {
     nsUtil::CHashStr Hashor;
     DicoMap_t Dico       (&Hashor, 1000000);
-    TrigMap_t MotToTrigs (&Hashor, 1000000);
     TrigMap_t TrigToMots (&Hashor, 40000);
     cout << "Indexation des mots du dictionnaire... " << flush;
     clock_t start = clock();
-    RemplirDicosAvecFichier("../materiel4/dico_iso.txt",
-                            Dico,
-                            MotToTrigs,
-                            TrigToMots);
+    RemplirDicosAvecFichier("../materiel4/dico_iso.txt", Dico, TrigToMots);
     cout << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
@@ -49,7 +45,7 @@ int main (int argc, char * argv [])
 
         vector<string> VProps;
         cout << "correction du mot " << MotOrig << endl;
-        CorrigerMot(MotOrig, Dico, MotToTrigs, TrigToMots, VProps);
+        CorrigerMot(MotOrig, Dico, TrigToMots, VProps);
         if (VProps.empty())
         {
             ++NbMotsNonCorrige;
@@ -87,9 +83,6 @@ int main (int argc, char * argv [])
          << '\t' << NbMotsNonCorrige << " non corriges" << endl;
 
     cout << "Nettoyage..." << endl;
-    for (TrigMap_t::iterator i (MotToTrigs.begin());
-         i != MotToTrigs.end();
-         ++i) delete i->second;
     for (TrigMap_t::iterator i (TrigToMots.begin());
          i != TrigToMots.end();
          ++i) delete i->second;

@@ -26,7 +26,6 @@ namespace nsCorr
 
     void RemplirDicosAvecFichier (const std::string & PathDico,
                                   DicoMap_t & Dico,
-                                  TrigMap_t & MotToTrigs,
                                   TrigMap_t & TrigToMots) throw ();
 
     /*
@@ -35,7 +34,6 @@ namespace nsCorr
      */
     void CorrigerMot (const std::string & Mot,
                       const DicoMap_t & Dico,
-                      const TrigMap_t & MotToTrigs,
                       const TrigMap_t & TrigToMots,
                       std::vector<std::string> & VProp);
 
