@@ -84,7 +84,7 @@ void nsCorr::CorrigerMot (const string & Mot,
 
     nsUtil::CHashStr Hashor;
     // Cpt["abc"] : nombre de trigrammes commun entre "abc" et Mot
-    StrCpt_t Cpt (&Hashor, 20000); // TODO map qui aug sa cap auto
+    StrCpt_t Cpt (&Hashor, 20000);
     LINKSTR * TrigsMot = GetTrigrammes(Mot);
     for (LINKSTR * T (TrigsMot); T; T = T->GetSuivant())
     {

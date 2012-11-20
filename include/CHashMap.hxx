@@ -21,11 +21,14 @@
 #define MAP nsSdD::CHashMap<K, V>
 
 TEMPL
-const float MAP::s_LoadFactor = 0.75;
+const float    MAP::s_LoadFactor = 0.75;
+
+TEMPL
+const unsigned MAP::s_DfltInitialCapacity = 16;
 
 TEMPLINL
 MAP::CHashMap (Hashor_t * Hashor, const unsigned Cap) throw ()
- : m_NbElem (0), m_V (Cap)
+ : m_NbElem (0), m_Threshold (Cap * s_LoadFactor), m_V (Cap)
 {
     m_Hashor = Hashor;
 }
@@ -58,20 +61,28 @@ unsigned MAP::GetCapacity (void) const throw ()
 
 } // GetCapacity()
 
-//TEMPL
-//void MAP::EnsureCapacity (void) throw ()
-//{
-//    if (m_NbElem+1 < m_V.size() * s_LoadFactor) return;
-//
-//    // resize and rehash everything
-//    VLinkPair_t OldV (m_V.begin(), m_V.end());
-//    m_V = VLinkPair_t (nsUtil::ProchainNombreRond(m_NbElem << 1));
-//    m_NbElem = 0;
-//
-//    for (typename VLinkPair_t::iterator i (OldV.begin()); i < OldV.end(); ++i)
-//        Put((*i)->GetInfo().first, (*i)->GetInfo().second);
-//
-//} // EnsureCapacity()
+TEMPL
+void MAP::Resize (unsigned NewCap) throw ()
+{
+    VLinkPair_t NewV (NewCap);
+
+    // rehash everything
+    for (size_t i(0); i < GetCapacity(); ++i)
+    {
+        for (LinkPair_t * LPair (m_V[i]); LPair; )
+        {
+            LinkPair_t * NewLPair (LPair);
+            LPair = LPair->GetSuivant();
+            unsigned Hash ((*m_Hashor)(NewLPair->GetInfo().first, NewCap));
+            NewLPair->SetSuivant(NewV[Hash]);
+            NewV[Hash] = NewLPair;
+        }
+    }
+
+    m_V = NewV;
+    m_Threshold = GetCapacity() * s_LoadFactor;
+
+} // Resize()
 
 TEMPL
 void MAP::FillNbEntree (std::vector<unsigned> & VNbEntree) const throw ()
@@ -100,7 +111,6 @@ void MAP::FillNbEntree (std::vector<unsigned> & VNbEntree) const throw ()
 TEMPL
 typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
 {
-    //cout << "[] on " << Key << endl;
     unsigned H ((*m_Hashor)(Key, GetCapacity()));
 
     for (LinkPair_t * Elem (m_V[H]); Elem != 0; Elem = Elem->GetSuivant())
@@ -110,7 +120,13 @@ typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
     // pas d'elements a l'indice Key, on le cree, initialise par defaut
     m_V[H] = new LinkPair_t(make_pair(Key, Value_t()), m_V[H]);
     m_Keys.push_back(Key);
-    ++m_NbElem;
+
+    if (++m_NbElem > m_Threshold)
+    {
+        Resize(GetCapacity() << 1);
+        // re-compute the hash
+        H = (*m_Hashor)(Key, GetCapacity());
+    }
 
     return m_V[H]->GetInfo().second;
 

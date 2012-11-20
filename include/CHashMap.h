@@ -28,18 +28,20 @@ namespace nsSdD
         typedef nsUtil::IHash<K>          Hashor_t;
 
       private :
-        static const float s_LoadFactor;
+        static const float    s_LoadFactor;
+        static const unsigned s_DfltInitialCapacity;
 
         unsigned m_NbElem;
+        unsigned m_Threshold;   // if m_NbElem > m_Threshold, resize
         VLinkPair_t m_V;
-        Hashor_t * m_Hashor; // ptr car polymorphisme dans le constructeur
+        Hashor_t * m_Hashor;    // ptr car polymorphisme dans le constructeur
         VKeys_t m_Keys;
 
-//        void EnsureCapacity (void)                                  throw ();
+        void Resize (unsigned Cap)                                  throw ();
 
       public :
         CHashMap (Hashor_t * Hashor, const unsigned Cap)            throw ();
-//        CHashMap (Hashor_t * Hashor)                                throw ();
+        //CHashMap (Hashor_t * Hashor)                                throw ();
         ~CHashMap (void)                                            throw ();
 
         unsigned        GetNbElem   (void)                    const throw ();
