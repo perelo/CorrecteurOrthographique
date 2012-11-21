@@ -10,32 +10,22 @@
 
 #include <ctime>
 
+#include "CHashStr.h"
+
 using namespace std;
-
-namespace
-{
-    int Cap = 1000000;
-    unsigned Hash (const string Str)
-    {
-        unsigned Hash (0);
-        for (unsigned i(0); i < Str.size(); ++i)
-            Hash = (Hash * 31 + Str[i]) % Cap;
-
-        return Hash;
-
-    } // Hash
-}
 
 int main ()
 {
-    const unsigned Nb (1000000);
+    const unsigned Cap (1000000);
+    const unsigned Nb  (1000000);
 
+    const nsUtil::CHashStr Hashor;
     clock_t start (clock());
-    for (unsigned i(0); i < 1000000; ++i) Hash("string");
+    for (unsigned i(0); i < 1000000; ++i) Hashor("string", Cap);
     float tps ((clock() - start) / float(CLOCKS_PER_SEC) * 1000);
 
-    cout << Nb << " x Jaccard() en " << tps << " ms"
-         << " soit un Jaccard() en " << (tps / Nb) << " ms" << endl;
+    cout << Nb << " x Hash() en " << tps << " ms"
+         << " soit un Hash() en " << (tps / Nb) << " ms" << endl;
 
     return 0;
 
