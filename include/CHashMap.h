@@ -39,6 +39,9 @@ namespace nsSdD
 
         void Resize (unsigned Cap)                                  throw ();
 
+        CHashMap (const CHashMap &);
+        CHashMap & operator = (const CHashMap &);
+
       public :
         CHashMap (Hashor_t * Hashor,
                   const unsigned Cap = s_DfltInitialCapacity)       throw ();
