@@ -57,12 +57,15 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
     {
         Dico[Mot] = Mot;
 
-        for (LINKSTR * Trig = GetTrigrammes(Mot);
+        LINKSTR * Trig;
+        for (Trig = GetTrigrammes(Mot);
              Trig;
              Trig = Trig->GetSuivant())
             DicoTrigs[Trig->GetInfo()] =
                                 new LINKSTR(Mot, DicoTrigs[Trig->GetInfo()]);
             // TODO modifier pour qu'on ne fasse qu'un appel a [] (ici, 2x hash)
+
+        delete Trig;
 
     }
 
@@ -99,9 +102,13 @@ void nsCorr::CorrigerMot (const string & Mot,
 
     for (StrCpt_t::iterator It (Cpt.begin()); It < Cpt.end(); ++It)
     {
+        LINKSTR * Trig;
         if (It->second >= Mot.size()/2 &&
-            Jaccard(GetTrigrammes(It->first), TrigsMot) > 0.2)
+            Jaccard(Trig = GetTrigrammes(It->first), TrigsMot) > 0.2)
+        {
             VProp.push_back(It->first);
+            delete Trig;
+        }
     }
     delete TrigsMot;
 
