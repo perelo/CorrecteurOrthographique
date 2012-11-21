@@ -129,17 +129,10 @@ typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
 TEMPL
 const typename MAP::Entry_t * MAP::Find (const Key_t & Key) const throw ()
 {
-    unsigned H ((*m_Hashor)(Key, GetCapacity()));
-
-    for (LinkPair_t * Elem (m_V[H]); Elem != 0; Elem = Elem->GetSuivant())
-        if (Elem->GetInfo().first == Key)
-            return &Elem->GetInfo();
-
-    return 0;
+    return (const_cast<MAP*>(this))->Find(Key);
 
 } // Find()
 
-// TODO use const Find() pour pas qu'il y ai de code dupplique
 TEMPL
 typename MAP::Entry_t * MAP::Find (const Key_t & Key) throw ()
 {
