@@ -8,19 +8,37 @@
 #include <iostream>
 #include <string>
 
+#include <ctime>
+
 #include "Jaccard.h"
 #include "Correcteur.h"
+#include "CLink.h"
 
 using namespace std;
 using namespace nsUtil;
 using namespace nsCorr;
+using namespace nsSdD;
 
 int main ()
 {
     string MotOrig ("$accueil$");
     string MotDest ("$acceuil$");
+    CLink<string> * TrigOrig = GetTrigrammes(MotOrig);
+    CLink<string> * TrigDest = GetTrigrammes(MotDest);
+
     cout << "Jaccard(" << MotOrig << ", " << MotDest << ") = "
-         << Jaccard(GetTrigrammes(MotOrig), GetTrigrammes(MotDest)) << endl;
+         << Jaccard(TrigOrig, TrigDest) << endl;
+
+    const unsigned Nb (1000000);
+    clock_t start (clock());
+    for (unsigned i(0); i < Nb; ++i) Jaccard(TrigOrig, TrigDest);
+    float tps ((clock() - start) / float(CLOCKS_PER_SEC) * 1000);
+
+    cout << Nb << " x Jaccard() en " << tps << " ms"
+         << " soit un Jaccard() en " << (tps / Nb) << " ms" << endl;
+
+    delete TrigOrig;
+    delete TrigDest;
 
     return 0;
 
