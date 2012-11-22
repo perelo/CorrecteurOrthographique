@@ -166,16 +166,15 @@ typename MAP::iterator MAP::end () throw ()
 } // end()
 
 TEMPLINL
-typename MAP::Entry_t & MAP::iterator::operator * () throw ()
+const typename MAP::Entry_t & MAP::iterator::operator * () const throw ()
 {
     return * operator -> ();
 
 } // operator *()
 
 TEMPLINL
-typename MAP::Entry_t * MAP::iterator::operator -> () throw ()
+const typename MAP::Entry_t * MAP::iterator::operator -> () const throw ()
 {
-    // TODO check when Find() returns null
     return m_Map->Find( *(typename VKeys_t::iterator(*this)) );
 
 } // operator ->()

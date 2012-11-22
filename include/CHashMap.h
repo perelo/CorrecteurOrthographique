@@ -63,12 +63,12 @@ namespace nsSdD
 
             CHashMap<Key_t, Value_t> * m_Map;
 
-            iterator (CHashMap<Key_t, Value_t> *         Map,
+            iterator (CHashMap<Key_t, Value_t>         * Map,
                       const typename VKeys_t::iterator & It) throw ();
 
           public :
-            Entry_t & operator *  (void)                     throw ();
-            Entry_t * operator -> (void)                     throw ();
+            const Entry_t & operator *  (void) const         throw ();
+            const Entry_t * operator -> (void) const         throw ();
 
         }; // iterator
 
