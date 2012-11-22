@@ -129,7 +129,7 @@ typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
 TEMPL
 const typename MAP::Entry_t * MAP::Find (const Key_t & Key) const throw ()
 {
-    return (const_cast<MAP*>(this))->Find(Key);
+    return const_cast<MAP*>(this)->Find(Key);
 
 } // Find()
 
