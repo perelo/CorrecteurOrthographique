@@ -147,26 +147,64 @@ typename MAP::Entry_t * MAP::Find (const Key_t & Key) throw ()
 } // Find()
 
 TEMPLINL
-MAP::iterator::iterator (CHashMap<Key_t, Value_t> * Map,
-                         const typename VKeys_t::iterator & It) throw ()
- : VKeys_t::iterator (It), m_Map (Map) {}
+MAP::iterator::iterator (CHashMap<K, V> * Map, unsigned Pos,
+                         CLink<Entry_t> * Iter) throw ()
+ : m_Map (Map), m_Pos (Pos), m_Iter (Iter) {}
 
 TEMPL
 typename MAP::iterator MAP::begin () throw ()
 {
-    return iterator(this, m_Keys.begin());
+    for (unsigned i(0); i < m_V.size(); ++i)
+    {
+        if (m_V[i] != NULL)
+            return iterator(this, i, m_V[i]);
+    }
+
+    return end();
 
 } // begin()
 
-TEMPL
+TEMPLINL
 typename MAP::iterator MAP::end () throw ()
 {
-    return iterator(this, m_Keys.end());
+    return iterator(0, 0, 0);
 
 } // end()
 
+TEMPL
+typename MAP::iterator & MAP::iterator::operator ++ (void) throw ()
+{
+    if (m_Iter->GetSuivant())
+        m_Iter = m_Iter->GetSuivant();
+    else
+    {
+        for (++m_Pos; m_Pos < m_Map->m_V.size(); ++m_Pos)
+        {
+            if (m_Map->m_V[m_Pos])
+            {
+                m_Iter = m_Map->m_V[m_Pos];
+                break;
+            }
+        }
+    }
+    if (m_Pos >= m_Map->m_V.size())
+        *this = m_Map->end();
+
+    return *this;
+
+} // operator ++()
+
 TEMPLINL
-const typename MAP::Entry_t & MAP::iterator::operator * () const throw ()
+typename MAP::iterator MAP::iterator::operator ++ (int)  throw ()
+{
+    iterator Copie (*this);
+    ++(*this);
+    return Copie;
+
+} // operator ++(int)
+
+TEMPLINL
+const typename MAP::Entry_t & MAP::iterator::operator *  () const throw ()
 {
     return * operator -> ();
 
@@ -175,9 +213,23 @@ const typename MAP::Entry_t & MAP::iterator::operator * () const throw ()
 TEMPLINL
 const typename MAP::Entry_t * MAP::iterator::operator -> () const throw ()
 {
-    return m_Map->Find( *(typename VKeys_t::iterator(*this)) );
+    return &m_Iter->GetInfo();
 
 } // operator ->()
+
+TEMPLINL
+bool MAP::iterator::operator == (const iterator & It) throw ()
+{
+    return this->m_Iter == It.m_Iter;
+
+} // operator ==()
+
+TEMPLINL
+bool MAP::iterator::operator != (const iterator & It) throw ()
+{
+    return ! (*this == It);
+
+} // operator !=()
 
 #undef MAP
 #undef TEMPLINL

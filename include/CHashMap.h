@@ -56,19 +56,25 @@ namespace nsSdD
               Entry_t * Find  (const Key_t & Key)                   throw ();
 
 
-        class iterator : public VKeys_t::iterator
+        class iterator
         {
           private :
             friend class CHashMap<Key_t, Value_t>;
+            CHashMap<K, V> * m_Map;
+            unsigned m_Pos;
+            CLink<Entry_t> * m_Iter;
 
-            CHashMap<Key_t, Value_t> * m_Map;
-
-            iterator (CHashMap<Key_t, Value_t>         * Map,
-                      const typename VKeys_t::iterator & It) throw ();
+            iterator (CHashMap<Key_t, Value_t> * Map, unsigned Pos,
+                      CLink<Entry_t>           * Iter) throw ();
 
           public :
-            const Entry_t & operator *  (void) const         throw ();
-            const Entry_t * operator -> (void) const         throw ();
+            iterator & operator ++ (void)              throw ();
+            iterator   operator ++ (int)               throw ();
+            const Entry_t & operator *  () const       throw ();
+            const Entry_t * operator -> () const       throw ();
+
+            bool operator == (const iterator & It)     throw ();
+            bool operator != (const iterator & It)     throw ();
 
         }; // iterator
 
