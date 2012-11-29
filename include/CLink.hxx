@@ -27,10 +27,10 @@ TEMPLINL LINK::~CLink (void) throw ()
 } // ~CLink
 
 TEMPLINL
-T & LINK::GetInfo (void) const throw () { return m_Info; }
+const T & LINK::GetInfo (void) const throw () { return m_Info; }
 
 TEMPLINL
-T & LINK::GetInfo (void)       throw () { return m_Info; }
+      T & LINK::GetInfo (void)       throw () { return m_Info; }
 
 TEMPLINL
 LINK * LINK::GetSuivant (void) const throw () { return m_Suivant; }

@@ -28,8 +28,8 @@ namespace nsSdD
                const PtrL_t Suivant = 0)        throw ();
         ~CLink (void)                           throw ();
 
-        T & GetInfo       (void) const          throw ();
-        T & GetInfo       (void)                throw ();
+        const T & GetInfo (void) const          throw ();
+              T & GetInfo (void)                throw ();
         PtrL_t GetSuivant (void) const          throw ();
 
         void SetInfo    (const T & Info)        throw ();
