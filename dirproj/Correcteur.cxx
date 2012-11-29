@@ -100,7 +100,7 @@ void nsCorr::CorrigerMot (const string & Mot,
             ++Cpt[MotTrigCommun->GetInfo()];
     }
 
-    for (StrCpt_t::iterator It (Cpt.begin()); It < Cpt.end(); ++It)
+    for (StrCpt_t::iterator It (Cpt.begin()); It != Cpt.end(); ++It)
     {
         LINKSTR * Trig;
         if (It->second >= Mot.size()/2 &&
