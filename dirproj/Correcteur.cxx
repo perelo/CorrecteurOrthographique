@@ -103,8 +103,8 @@ void nsCorr::CorrigerMot (const string & Mot,
     for (StrCpt_t::iterator It (Cpt.begin()); It != Cpt.end(); ++It)
     {
         LINKSTR * Trig;
-        if (It->second >= Mot.size()/2 &&
-            Jaccard(Trig = GetTrigrammes(It->first), TrigsMot) > 0.2)
+        if (It->second >= Mot.size() * CoefNbTrigrammesCommuns &&
+            Jaccard(Trig = GetTrigrammes(It->first), TrigsMot) > CoefJaccardMin)
         {
             VProp.push_back(It->first);
             delete Trig;
