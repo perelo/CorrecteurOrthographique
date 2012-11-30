@@ -9,6 +9,8 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <utility>  // pair
+#include <iomanip>  // setw()
 
 #include <ctime>
 
@@ -31,8 +33,9 @@ int main (int argc, char * argv [])
     cout << (clock() - start) / float(CLOCKS_PER_SEC)
          << endl;
 
-    unsigned NbMotsDansProps, NbMotsCorrige, NbMotsNonCorrige;
-    NbMotsDansProps = NbMotsCorrige = NbMotsNonCorrige = 0;
+    unsigned NbMotsDansProps, NbMotsCorrige;
+    NbMotsDansProps = NbMotsCorrige = 0;
+    vector<pair<string, string> > VMotsNonCorrige;
 
     ifstream is ("../materiel4/fautes_iso.txt");
     cout << "\nCorrection des mots dans le fichier" << endl;
@@ -48,7 +51,7 @@ int main (int argc, char * argv [])
         CorrigerMot(MotOrig, Dico, DicoTrigs, VProps);
         if (VProps.empty())
         {
-            ++NbMotsNonCorrige;
+            VMotsNonCorrige.push_back(make_pair(MotOrig, MotCorrige));
             continue;
         }
         else if (VProps[0] == MotCorrige)
@@ -69,7 +72,7 @@ int main (int argc, char * argv [])
                 }
             }
             if (iProp == VProps.end())
-                ++NbMotsNonCorrige;
+                VMotsNonCorrige.push_back(make_pair(MotOrig, MotCorrige));
         }
 
     }
@@ -79,9 +82,13 @@ int main (int argc, char * argv [])
     cout << "Fin correction des mots" << endl;
 
     cout << "Bilan : " << temps * 1000 << "ms\n"
-         << '\t' << NbMotsCorrige    << " bonnes corrections\n"
-         << '\t' << NbMotsDansProps  << " dans la liste des propositions\n"
-         << '\t' << NbMotsNonCorrige << " non corriges" << endl;
+         << VMotsNonCorrige.size() + NbMotsDansProps << " mots lus :\n"
+         << '\t' << NbMotsCorrige          << " bonnes corrections\n"
+         << '\t' << NbMotsDansProps        << " dans la liste des suggestions\n"
+         << '\t' << VMotsNonCorrige.size() << " non corriges :" << endl;
+    for (vector<pair<string, string> >::iterator i (VMotsNonCorrige.begin());
+                                                i < VMotsNonCorrige.end(); ++i)
+        cout << setw(15) << i->first << setw(25) << i->second << endl;
 
     cout << "Nettoyage..." << endl;
     for (TrigMap_t::iterator i (DicoTrigs.begin());
