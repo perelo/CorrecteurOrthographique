@@ -103,10 +103,11 @@ void nsCorr::CorrigerMot (const string & Mot,
             ++Cpt[MotTrigCommun->GetInfo()];
     }
 
+    unsigned NbTrigsCommunMin (floor(Mot.size() * CoefNbTrigrammesCommuns));
     for (StrCpt_t::iterator It (Cpt.begin()); It != Cpt.end(); ++It)
     {
         LINKSTR * Trig;
-        if (It->second >= floor(Mot.size() * CoefNbTrigrammesCommuns) &&
+        if (It->second >= NbTrigsCommunMin &&
             Jaccard(Trig = GetTrigrammes(It->first), TrigsMot) > CoefJaccardMin)
         {
             VProp.push_back(It->first);
