@@ -38,7 +38,7 @@ namespace nsCorr
     void CorrigerMot (const std::string & Mot,
                       const DicoMap_t & Dico,
                       const TrigMap_t & DicoTrigs,
-                      std::vector<std::string> & VProp);
+                      std::vector<std::string> & VProp) throw ();
 
     class CompLevenshteinC : public nsUtil::IComp <std::string>
     {

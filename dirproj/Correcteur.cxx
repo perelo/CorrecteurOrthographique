@@ -76,7 +76,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 void nsCorr::CorrigerMot (const string & Mot,
                           const DicoMap_t & Dico,
                           const TrigMap_t & DicoTrigs,
-                          vector<string> & VProp)
+                          vector<string> & VProp) throw ()
 {
     VProp.clear();
     if (Dico.Find(Mot))
