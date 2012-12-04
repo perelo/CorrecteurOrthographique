@@ -35,9 +35,6 @@ namespace nsSdD
         void SetInfo    (const T & Info)        throw ();
         void SetSuivant (const PtrL_t Suivant)  throw ();
 
-        PtrL_t InsereApres     (PtrL_t NewElem) throw ();
-        PtrL_t SupprimeSuivant (PtrL_t Elem)    throw ();
-
     }; // CLink
 
 } // namespace nsSdD

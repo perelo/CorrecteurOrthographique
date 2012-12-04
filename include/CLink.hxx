@@ -36,30 +36,10 @@ TEMPLINL
 LINK * LINK::GetSuivant (void) const throw () { return m_Suivant; }
 
 TEMPLINL
-void LINK::SetInfo    (const T & Info)      throw () { m_Info = Info; }
+void LINK::SetInfo    (const T & Info)       throw () { m_Info = Info; }
 
 TEMPLINL
 void LINK::SetSuivant (const PtrL_t Suivant) throw () { m_Suivant = Suivant; }
-
-TEMPLINL
-LINK * LINK::InsereApres (PtrL_t NewElem) throw ()
-{
-    NewElem->SetSuivant(this->GetSuivant());
-    this->SetSuivant(NewElem);
-
-    return NewElem;
-
-} // InsereApres()
-
-TEMPLINL
-LINK * LINK::SupprimeSuivant (PtrL_t Elem) throw ()
-{
-    PtrL_t Suivant = Elem->GetSuivant();
-    Elem->SetSuivant(Suivant->GetSuivant());
-
-    return Suivant;
-
-} // Supprime()
 
 #undef LINK
 #undef TEMPLINL
