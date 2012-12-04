@@ -118,7 +118,7 @@ typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
     if (++m_NbElem > m_Threshold)
     {
         Resize(GetCapacity() << 1);
-        // re-compute the hash
+        // compute the new hash (cuz capacity have changed)
         H = (*m_Hashor)(Key, GetCapacity());
     }
 
@@ -155,10 +155,8 @@ TEMPL
 typename MAP::iterator MAP::begin () throw ()
 {
     for (unsigned i(0); i < m_V.size(); ++i)
-    {
-        if (m_V[i] != NULL)
+        if (m_V[i])
             return iterator(this, i, m_V[i]);
-    }
 
     return end();
 
@@ -206,14 +204,14 @@ typename MAP::iterator MAP::iterator::operator ++ (int)  throw ()
 TEMPLINL
 const typename MAP::Entry_t & MAP::iterator::operator *  () const throw ()
 {
-    return * operator -> ();
+    return m_Iter->GetInfo();
 
 } // operator *()
 
 TEMPLINL
 const typename MAP::Entry_t * MAP::iterator::operator -> () const throw ()
 {
-    return &m_Iter->GetInfo();
+    return & operator * ();
 
 } // operator ->()
 
