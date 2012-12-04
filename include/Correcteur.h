@@ -40,19 +40,6 @@ namespace nsCorr
                       const TrigMap_t & DicoTrigs,
                       std::vector<std::string> & VProp);
 
-    class CompJaccard : public nsUtil::IComp <std::string>
-    {
-      private :
-        const std::string Mot;
-
-      public :
-        CompJaccard (const std::string & Mot)                  throw ();
-        virtual ~CompJaccard (void)                            throw ();
-        virtual bool operator () (const std::string & A,
-                                  const std::string & B) const throw ();
-
-    }; // CompJaccard
-
     class CompLevenshteinC : public nsUtil::IComp <std::string>
     {
       private :

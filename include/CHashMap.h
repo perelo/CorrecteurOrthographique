@@ -33,7 +33,9 @@ namespace nsSdD
 
         unsigned m_NbElem;
         unsigned m_Threshold;   // if m_NbElem > m_Threshold, resize
+public:
         VLinkPair_t m_V;
+private:
         Hashor_t * m_Hashor;    // ptr car polymorphisme dans le constructeur
         VKeys_t m_Keys;
 

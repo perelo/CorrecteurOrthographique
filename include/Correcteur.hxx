@@ -24,23 +24,6 @@ void nsCorr::AjouterDelimiteur (std::string & Mot) throw ()
 } // AjouterDelimiteur
 
 inline
-nsCorr::CompJaccard::CompJaccard (const std::string & Mot) throw ()
- : Mot (Mot) {}
-
-inline
-nsCorr::CompJaccard::~CompJaccard (void) throw () {}
-
-inline
-bool nsCorr::CompJaccard::operator () (const std::string & A,
-                                       const std::string & B) const throw ()
-{
-    return nsUtil::Jaccard(GetTrigrammes(A), GetTrigrammes(Mot)) -
-           nsUtil::Jaccard(GetTrigrammes(B), GetTrigrammes(Mot)) >
-           std::numeric_limits<float>::epsilon();
-
-} // operator()()
-
-inline
 nsCorr::CompLevenshteinC::CompLevenshteinC (const std::string & Mot) throw ()
  : Mot (Mot) {}
 
