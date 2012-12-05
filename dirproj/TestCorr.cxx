@@ -81,11 +81,16 @@ int main (int argc, char * argv [])
     float temps ((clock() - start) / float(CLOCKS_PER_SEC));
     cout << "Fin correction des mots" << endl;
 
+    unsigned NbMotsTotal (VMotsNonCorrige.size() + NbMotsDansProps);
     cout << "Bilan : " << temps * 1000 << "ms\n"
-         << VMotsNonCorrige.size() + NbMotsDansProps << " mots lus :\n"
-         << '\t' << NbMotsCorrige          << " bonnes corrections\n"
-         << '\t' << NbMotsDansProps        << " dans la liste des suggestions\n"
-         << '\t' << VMotsNonCorrige.size() << " non corriges :" << endl;
+         << NbMotsTotal                     << " mots lus :\n"
+         << '\t' << NbMotsCorrige          << " bonnes corrections"
+         << " (" << NbMotsCorrige / float(NbMotsTotal) * 100.0 << "%)\n"
+         << '\t' << NbMotsDansProps        << " dans la liste des suggestions"
+         << " (" << NbMotsDansProps / float(NbMotsTotal) * 100.0 << "%)\n"
+         << '\t' << VMotsNonCorrige.size() << " non corriges"
+         << " (" << VMotsNonCorrige.size() / float(NbMotsTotal) * 100.0 << "%) : "
+         << endl;
     for (vector<pair<string, string> >::iterator i (VMotsNonCorrige.begin());
                                                 i < VMotsNonCorrige.end(); ++i)
         cout << setw(15) << i->first << setw(25) << i->second << endl;
