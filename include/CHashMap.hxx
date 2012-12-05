@@ -13,7 +13,7 @@
 
 #include "CHashMap.h"
 #include "CLink.h"
-#include "MathUtil.h"   // Poisson(), ProchainNombreRond()
+#include "MathUtil.h"   // Poisson()
 
 #define TEMPL    template <class K, class V>
 #define TEMPLINL TEMPL inline
