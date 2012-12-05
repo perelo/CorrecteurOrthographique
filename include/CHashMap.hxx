@@ -113,7 +113,6 @@ typename MAP::Value_t & MAP::operator [] (const Key_t & Key) throw ()
 
     // pas d'elements a l'indice Key, on le cree, initialise par defaut
     m_V[H] = new LinkPair_t(make_pair(Key, Value_t()), m_V[H]);
-    m_Keys.push_back(Key);
 
     if (++m_NbElem > m_Threshold)
     {

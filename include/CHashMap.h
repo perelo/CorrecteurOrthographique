@@ -21,10 +21,10 @@ namespace nsSdD
       public :
         typedef K                         Key_t;
         typedef V                         Value_t;
-        typedef std::pair<K, V>           Entry_t;
+        typedef std::pair<Key_t, Value_t> Entry_t;
         typedef CLink<Entry_t>            LinkPair_t;
         typedef std::vector<LinkPair_t *> VLinkPair_t;
-        typedef nsUtil::IHash<K>          Hashor_t;
+        typedef nsUtil::IHash<Key_t>      Hashor_t;
 
       private :
         static const float    s_LoadFactor;
