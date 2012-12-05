@@ -24,7 +24,6 @@ namespace nsSdD
         typedef std::pair<K, V>           Entry_t;
         typedef CLink<Entry_t>            LinkPair_t;
         typedef std::vector<LinkPair_t *> VLinkPair_t;
-        typedef std::vector<Key_t>        VKeys_t;
         typedef nsUtil::IHash<K>          Hashor_t;
 
       private :
@@ -35,7 +34,6 @@ namespace nsSdD
         unsigned m_Threshold;   // if m_NbElem > m_Threshold, resize
         VLinkPair_t m_V;
         Hashor_t * m_Hashor;    // ptr car polymorphisme dans le constructeur
-        VKeys_t m_Keys;
 
         void Resize (unsigned Cap)                                  throw ();
 
