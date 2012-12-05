@@ -61,10 +61,10 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
         for (LINKSTR * Trig = TrigHead;
              Trig;
              Trig = Trig->GetSuivant())
-            DicoTrigs[Trig->GetInfo()] =
-                                new LINKSTR(Mot, DicoTrigs[Trig->GetInfo()]);
-            // TODO modifier pour qu'on ne fasse qu'un appel a [] (ici, 2x hash)
-
+        {
+            LINKSTR * & Liste = DicoTrigs[Trig->GetInfo()];
+            Liste = new LINKSTR(Mot, Liste);
+        }
         delete TrigHead;
 
     }
