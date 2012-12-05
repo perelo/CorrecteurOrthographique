@@ -62,12 +62,9 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
              Trig;
              Trig = Trig->GetSuivant())
         {
-            LINKSTR * & ListeMots (DicoTrigs[Trig->GetInfo()]);
-            ListeMots = new LINKSTR(Mot, ListeMots);
-            //DicoTrigs[Trig->GetInfo()] =
-                                //new LINKSTR(Mot, DicoTrigs[Trig->GetInfo()]);
+            LINKSTR * & Liste = DicoTrigs[Trig->GetInfo()];
+            Liste = new LINKSTR(Mot, Liste);
         }
-
         delete TrigHead;
 
     }
