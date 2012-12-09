@@ -20,8 +20,9 @@ namespace nsCorr
     typedef nsSdD::CHashMap<std::string, nsSdD::CLink<std::string>*> TrigMap_t;
     typedef nsSdD::CHashMap<std::string, unsigned>                   StrCpt_t;
 
-    const float CoefNbTrigrammesCommuns = 0.5;
-    const float CoefJaccardMin          = 0.2;
+    const float    CoefNbTrigrammesCommuns = 0.5;
+    const float    CoefJaccardMin          = 0.2;
+    const unsigned NbPropsMax              = 10;
 
     void AjouterDelimiteur (std::string & Mot)                      throw ();
     nsSdD::CLink<std::string> * GetTrigrammes (const std::string & Mot)

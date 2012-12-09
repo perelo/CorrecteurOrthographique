@@ -116,8 +116,8 @@ void nsCorr::CorrigerMot (const string & Mot,
     //sort(VProp.begin(), VProp.end(), CompJaccard(Mot));
 
     sort(VProp.begin(), VProp.end(), CompLevenshteinC(Mot));
-    if (VProp.size() > 10)
-        VProp.erase(VProp.begin()+10, VProp.end());
+    if (VProp.size() > NbPropsMax)
+        VProp.erase(VProp.begin()+NbPropsMax, VProp.end());
 
 } // CorrigerMot()
 
