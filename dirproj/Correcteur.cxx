@@ -55,7 +55,7 @@ void nsCorr::RemplirDicosAvecFichier (const string & PathDico,
 
     for (string Mot; getline(is, Mot); )
     {
-        Dico[Mot] = Mot;
+        Dico[Mot] = 0;
 
         LINKSTR * TrigHead = GetTrigrammes(Mot);
         for (LINKSTR * Trig = TrigHead;

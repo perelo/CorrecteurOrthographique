@@ -16,7 +16,7 @@
 
 namespace nsCorr
 {
-    typedef nsSdD::CHashMap<std::string, std::string>                DicoMap_t;
+    typedef nsSdD::CHashMap<std::string, int>                        DicoMap_t;
     typedef nsSdD::CHashMap<std::string, nsSdD::CLink<std::string>*> TrigMap_t;
     typedef nsSdD::CHashMap<std::string, unsigned>                   StrCpt_t;
 
