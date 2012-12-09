@@ -27,7 +27,7 @@ namespace
         double  Temps;
         string MotDico;
         string NomDico = "../materiel4/dico_iso.txt";
-        string NomTest = "TestFiles/leven_iso.txt";
+        string NomTest = "TestFiles/test_leven_iso.txt";
         VString Dico;
 
         /*

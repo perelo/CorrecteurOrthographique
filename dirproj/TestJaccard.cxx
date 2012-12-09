@@ -19,26 +19,36 @@ using namespace nsUtil;
 using namespace nsCorr;
 using namespace nsSdD;
 
+namespace
+{
+    void TestJaccard ()
+    {
+        string MotOrig ("$accueil$");
+        string MotDest ("$acceuil$");
+        CLink<string> * TrigOrig = GetTrigrammes(MotOrig);
+        CLink<string> * TrigDest = GetTrigrammes(MotDest);
+
+        cout << "Jaccard(" << MotOrig << ", " << MotDest << ") = "
+             << Jaccard(TrigOrig, TrigDest) << endl;
+
+        const unsigned Nb (1000000);
+        clock_t start (clock());
+        for (unsigned i(Nb); i--; ) Jaccard(TrigOrig, TrigDest);
+        float tps ((clock() - start) / float(CLOCKS_PER_SEC) * 1000);
+
+        cout << Nb << " x Jaccard() en " << tps << " ms"
+             << " soit un Jaccard() en " << (tps / Nb) << " ms" << endl;
+
+        delete TrigOrig;
+        delete TrigDest;
+
+    } // TestJaccard()
+
+} // anonymous namespace
+
 int main ()
 {
-    string MotOrig ("$accueil$");
-    string MotDest ("$acceuil$");
-    CLink<string> * TrigOrig = GetTrigrammes(MotOrig);
-    CLink<string> * TrigDest = GetTrigrammes(MotDest);
-
-    cout << "Jaccard(" << MotOrig << ", " << MotDest << ") = "
-         << Jaccard(TrigOrig, TrigDest) << endl;
-
-    const unsigned Nb (1000000);
-    clock_t start (clock());
-    for (unsigned i(0); i < Nb; ++i) Jaccard(TrigOrig, TrigDest);
-    float tps ((clock() - start) / float(CLOCKS_PER_SEC) * 1000);
-
-    cout << Nb << " x Jaccard() en " << tps << " ms"
-         << " soit un Jaccard() en " << (tps / Nb) << " ms" << endl;
-
-    delete TrigOrig;
-    delete TrigDest;
+    TestJaccard();
 
     return 0;
 
